@@ -2,9 +2,8 @@
 
 ------------------------------------------------------------------------
 
-### &nbsp; :sparkles: Autores&nbsp;/Authors&nbsp; :sparkles:
+### &nbsp; :busts_in_silhouette: Autores&nbsp;/Authors&nbsp; :busts_in_silhouette:
 
-##### :busts_in_silhouette:
 | Nome/Name                                             | Número Mecanográfico |
 |-------------------------------------------------------|----------------------|
 | [Cristiana Silva](https://github.com/CristianaMorais) | up201505454          |
