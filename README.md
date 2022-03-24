@@ -1,5 +1,4 @@
-# :computer: Segurança de Sistemas e Dados (CC4030) 21/22 :computer:
-
+### :computer: Segurança de Sistemas e Dados (CC4030) 21/22 :computer:
 ------------------------------------------------------------------------
 ## Assignment: Public Ledger for Auctions
 
