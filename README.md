@@ -15,5 +15,5 @@ The work is divided into 3 parts, distributed ledger, secure P2P and auction mec
 | Nome/Name                                             | Número Mecanográfico |
 |-------------------------------------------------------|----------------------|
 | [Cristiana Silva](https://github.com/CristianaMorais) | up201505454          |
-| [Nuno Tomás](https://github.com/nmotJL76)             | up201503467          |        
+| [Nuno Tomás](https://github.com/nmot97)               | up201503467          |        
 | [Rui Santos](https://github.com/RSantos42)            | up201805317          |    
