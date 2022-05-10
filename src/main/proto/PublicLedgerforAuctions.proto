@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "cnr";
+option java_outer_classname = "cnrProto";
+option objc_class_prefix = "HLW";
+
+service ParkingSpaces {
+  rpc ping(Ping) returns (Ping) {}
+
+  rpc store(Store) returns (Store) {}
+
+  rpc findNode(TargetID) returns (stream FoundNode) {}
+
+  rpc findValue(TargetID) returns (stream FoundValue) {}
+}
+
+message Ping {
+
+}
+
+message Store{
+
+}
+
+message TargetID{
+
+}
+
+message FoundNode{
+
+}
+
+message FoundValue{
+
+}
