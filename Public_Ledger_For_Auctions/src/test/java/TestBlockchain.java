@@ -1,3 +1,6 @@
+import ssd.Block;
+import ssd.Blockchain;
+
 public class TestBlockchain {
 
     public static void main(String[] args) {
