@@ -1,26 +1,27 @@
 package ssd;
 
-import java.util.Date;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Date;
+import java.util.*;
+
 
 public class Block {
 
+    ArrayList<String> transactions_hashes = new ArrayList<String>();
+    LinkedList<Transaction> transactions = new LinkedList<Transaction>();
 
-    private String version;
-    private Date Timestamp;
-    private String hash;
-    private String previousHash;
-    private String data;
+    String root_transaction_hash;
 
-    public Block(String version, Date timestamp, String data) {
-        this.version = version;
-        this.Timestamp = timestamp;
-        this.data = data;
-        this.hash = computeHash();
+    int nonce; //The int number which concatenated to the end of transactions root hash gives a hash with 4 zeros at left
+
+    String previous_hash;
+    final int max_transactions = 2; // TODO: para alterar para 10
+
+
+
+    Block(String previous_hash) {
+        root_transaction_hash = null;
+        nonce=0;
+        this.previous_hash = previous_hash;
+
     }
 
     public String computeHash() {
@@ -43,45 +44,36 @@ public class Block {
 
     }
 
-
-    public String getVersion() {
-        return version;
+    public boolean is_block_full() {
+        return (transactions_hashes.size() >= max_transactions);
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public String get_root_transaction_hash() {
+        return root_transaction_hash;
     }
 
-    public Date getTimestamp() {
-        return Timestamp;
+    public String get_previous_hash()
+    {
+
+        return this.previous_hash;
     }
 
-    public void setTimestamp(Date timestamp) {
-        Timestamp = timestamp;
+    public int getNonce() {
+        return this.nonce;
     }
 
-    public String getHash() {
-        return hash;
-    }
+   public void setNonce(int nonce) {
+        this.nonce = nonce;
+   }
 
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
+    public void add_transaction(Transaction t) {
+        if (!this.is_full_block() && t.verify_signature(t.getPublicKey(), t.getSig(), t.getMessage())) {
+            this.transactions.add(t);
+            this.transactions_hashes.add(t.transaction_hash());
+        }
 
-    public String getPreviousHash() {
-        return previousHash;
-    }
-
-    public void setPreviousHash(String previousHash) {
-        this.previousHash = previousHash;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
+        MerkleTree merkle_tree = new MerkleTree();
+        root_transaction_hash = merkle_tree.createMerkleTree(transactions_hashes);
     }
 
 
