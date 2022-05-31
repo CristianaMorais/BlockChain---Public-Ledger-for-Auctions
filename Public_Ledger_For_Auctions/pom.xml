@@ -73,7 +73,7 @@
                         <configuration>
                             <protocArtifact>com.google.protobuf:protoc:3.0.0</protocArtifact>
                             <inputDirectories>
-                                <include>src/main/resources</include>
+                                <include>src/main/proto</include>
                             </inputDirectories>
                             <outputTargets>
                                 <outputTarget>
