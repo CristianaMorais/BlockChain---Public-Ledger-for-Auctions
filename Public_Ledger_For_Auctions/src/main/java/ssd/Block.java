@@ -1,80 +1,60 @@
 package ssd;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Block {
 
-    ArrayList<String> transactions_hashes = new ArrayList<String>();
-    LinkedList<Transaction> transactions = new LinkedList<Transaction>();
+    public String hash;
+    public String previousHash;
+    public String merkleRoot;
+    public ArrayList<Transaction> transactions = new ArrayList<Transaction>(); //our data will be a simple message.
+    public long timeStamp; //as number of milliseconds since 1/1/1970.
+    public int nonce;
 
-    String root_transaction_hash;
+    //Block Constructor.
+    public Block(String previousHash ) {
+        this.previousHash = previousHash;
+        this.timeStamp = new Date().getTime();
 
-    int nonce; //The int number which concatenated to the end of transactions root hash gives a hash with 4 zeros at left
-
-    String previous_hash;
-    final int max_transactions = 2; // TODO: para alterar para 10
-
-
-
-    Block(String previous_hash) {
-        root_transaction_hash = null;
-        nonce=0;
-        this.previous_hash = previous_hash;
-
+        this.hash = calculateHash(); //Making sure we do this after we set the other values.
     }
 
-    public String computeHash() {
+    //Calculate new hash based on blocks contents
+    public String calculateHash() {
+        String calculatedhash = StringUtil.applySha256(
+                previousHash +
+                        Long.toString(timeStamp) +
+                        Integer.toString(nonce) +
+                        merkleRoot
+        );
+        return calculatedhash;
+    }
 
-        String dataToHash = "" + this.version + this.Timestamp + this.previousHash + this.data;
-
-        MessageDigest digest;
-        String encoded = null;
-
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(dataToHash.getBytes(StandardCharsets.UTF_8));
-            encoded = Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+    //Increases nonce value until hash target is reached.
+    public void mineBlock(int difficulty) {
+        merkleRoot = StringUtil.getMerkleRoot(transactions);
+        String target = StringUtil.getDificultyString(difficulty); //Create a string with difficulty * "0"
+        while(!hash.substring( 0, difficulty).equals(target)) {
+            nonce ++;
+            hash = calculateHash();
         }
-
-        this.hash = encoded;
-        return encoded;
-
+        System.out.println("Block Mined!!! : " + hash);
     }
 
-    public boolean is_block_full() {
-        return (transactions_hashes.size() >= max_transactions);
-    }
-
-    public String get_root_transaction_hash() {
-        return root_transaction_hash;
-    }
-
-    public String get_previous_hash()
-    {
-
-        return this.previous_hash;
-    }
-
-    public int getNonce() {
-        return this.nonce;
-    }
-
-   public void setNonce(int nonce) {
-        this.nonce = nonce;
-   }
-
-    public void add_transaction(Transaction t) {
-        if (!this.is_full_block() && t.verify_signature(t.getPublicKey(), t.getSig(), t.getMessage())) {
-            this.transactions.add(t);
-            this.transactions_hashes.add(t.transaction_hash());
+    //Add transactions to this block
+    public boolean addTransaction(Transaction transaction) {
+        //process transaction and check if valid, unless block is genesis block then ignore.
+        if(transaction == null) return false;
+        if((previousHash != "0")) {
+            if((transaction.processTransaction() != true)) {
+                System.out.println("Transaction failed to process. Discarded.");
+                return false;
+            }
         }
-
-        MerkleTree merkle_tree = new MerkleTree();
-        root_transaction_hash = merkle_tree.createMerkleTree(transactions_hashes);
+        transactions.add(transaction);
+        System.out.println("Transaction Successfully added to Block");
+        return true;
     }
-
 
 }
