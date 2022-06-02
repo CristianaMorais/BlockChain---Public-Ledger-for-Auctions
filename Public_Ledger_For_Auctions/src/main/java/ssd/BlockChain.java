@@ -4,7 +4,7 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class NoobChain {
+public class BlockChain {
 
     public static ArrayList<Block> blockchain = new ArrayList<Block>();
     public static HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
