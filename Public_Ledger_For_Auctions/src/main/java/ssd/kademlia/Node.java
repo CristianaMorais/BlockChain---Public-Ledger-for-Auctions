@@ -6,6 +6,7 @@ public class Node {
 
     private String ipaddr;
     private int udp_port;
+    private String nodeID;
     final int k_nodes = 20;
 
     private BlockChain bc;
