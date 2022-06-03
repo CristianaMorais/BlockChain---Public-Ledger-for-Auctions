@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class BlockChain {
 
-    public static ArrayList<Block> blockchain = new ArrayList<Block>();
-    public static HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+    public static ArrayList<Block> blockchain = new ArrayList<>();
+    public static HashMap<String,TransactionOutput> UTXOs = new HashMap<>();
 
     public static int difficulty = 3;
     public static float minimumTransaction = 0.1f;
@@ -29,7 +29,7 @@ public class BlockChain {
         genesisTransaction.generateSignature(coinbase.privateKey);	 //manually sign the genesis transaction
         genesisTransaction.transactionId = "0"; //manually set the transaction id
         genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
-        UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //its important to store our first transaction in the UTXOs list.
+        UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //it's important to store our first transaction in the UTXOs list.
 
         System.out.println("Creating and Mining Genesis block... ");
         Block genesis = new Block("0");
@@ -58,15 +58,15 @@ public class BlockChain {
         System.out.println("\nWalletA's balance is: " + walletA.getBalance());
         System.out.println("WalletB's balance is: " + walletB.getBalance());
 
-        isChainValid();
+        if(isChainValid())
+            System.out.println("Blockchain is valid");
 
     }
-
     public static Boolean isChainValid() {
         Block currentBlock;
         Block previousBlock;
         String hashTarget = new String(new char[difficulty]).replace('\0', '0');
-        HashMap<String,TransactionOutput> tempUTXOs = new HashMap<String,TransactionOutput>(); //a temporary working list of unspent transactions at a given block state.
+        HashMap<String,TransactionOutput> tempUTXOs = new HashMap<>(); //a temporary working list of unspent transactions at a given block state.
         tempUTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0));
 
         //loop through blockchain to check hashes:
@@ -90,7 +90,7 @@ public class BlockChain {
                 return false;
             }
 
-            //loop thru blockchains transactions:
+            //loop through blockchains transactions:
             TransactionOutput tempOutput;
             for(int t=0; t <currentBlock.transactions.size(); t++) {
                 Transaction currentTransaction = currentBlock.transactions.get(t);
@@ -125,7 +125,7 @@ public class BlockChain {
                 }
 
                 if( currentTransaction.outputs.get(0).recipient != currentTransaction.recipient) {
-                    System.out.println("#Transaction(" + t + ") output reciepient is not who it should be");
+                    System.out.println("#Transaction(" + t + ") output recipient is not who it should be");
                     return false;
                 }
                 if( currentTransaction.outputs.get(1).recipient != currentTransaction.sender) {
@@ -136,7 +136,6 @@ public class BlockChain {
             }
 
         }
-        System.out.println("Blockchain is valid");
         return true;
     }
 
