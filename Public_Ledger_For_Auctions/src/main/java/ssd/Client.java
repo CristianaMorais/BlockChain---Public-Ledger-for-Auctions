@@ -38,4 +38,7 @@ public class Client {
 
         return result.toString();
     }
+
+    // Parte do Kademlia
+
 }

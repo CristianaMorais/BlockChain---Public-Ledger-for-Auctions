@@ -1,11 +1,19 @@
 package ssd.kademlia;
 
+import io.grpc.ServerBuilder;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.util.encoders.Hex;
 import ssd.BlockChain;
+import ssd.kademlia.grpc.PingServiceImpl;
+
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class Node {
@@ -17,9 +25,9 @@ public class Node {
     other neighboring nodes, which is composed of (IP address, UDP port, node ID)
     data list (kad network exchanges information by UDP protocol).
     */
-    private String ipaddr;
-    private int udp_port;
-    private String nodeID;
+    private final String ipaddr;
+    private final int udp_port;
+    private final String nodeID;
     final int K_NODES = 20; //Number of adjacent nodes to store on the bucket
 
 
@@ -27,7 +35,7 @@ public class Node {
     Hashtable<String, BigInteger> ht_distance = new Hashtable<String, BigInteger>();
 
 
-    private BlockChain bc;
+    private final BlockChain bc;
 
     public Node(String ipaddr, int udp_port, String nodeID){
         this.ipaddr = ipaddr;
@@ -87,8 +95,7 @@ public class Node {
         return distance;
     }
 
-    public boolean isBiggerThan( BigInteger distance1, BigInteger distance2)
-    {
+    public boolean isBiggerThan( BigInteger distance1, BigInteger distance2) {
         return distance1.compareTo( distance2 ) == 1;
     }
 
@@ -140,6 +147,50 @@ public class Node {
         }
 
         return nodeMaxID;
+    }
+
+    public static class Server {
+        private final Logger logger = Logger.getLogger(Server.class.getName());
+
+        private io.grpc.Server server;
+
+        private void start() throws IOException {
+            /* The port on which the server should run */
+            int port = 50051;
+            server = ServerBuilder.forPort(port)
+                    .addService(new PingServiceImpl())
+                    .build()
+                    .start();
+            logger.info("Server started, listening on " + port);
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                // Use stderr here since the logger may have been reset by its JVM shutdown hook.
+                System.err.println("*** shutting down gRPC server since JVM is shutting down");
+                try {
+                    ssd.kademlia.Node.Server.this.stop();
+                } catch (InterruptedException e) {
+                    e.printStackTrace(System.err);
+                }
+                System.err.println("*** server shut down");
+            }));
+        }
+
+        private void stop() throws InterruptedException {
+            if (server != null) {
+                server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
+            }
+        }
+
+        private void blockUntilShutdown() throws InterruptedException {
+            if (server != null) {
+                server.awaitTermination();
+            }
+        }
+
+        public static void main(String[] args) throws IOException, InterruptedException {
+            final Server server = new Server();
+            server.start();
+            server.blockUntilShutdown();
+        }
     }
 
 }
