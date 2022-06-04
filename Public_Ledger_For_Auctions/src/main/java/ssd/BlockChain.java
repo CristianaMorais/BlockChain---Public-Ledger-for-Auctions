@@ -1,6 +1,5 @@
 package ssd;
 
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,8 +15,6 @@ public class BlockChain {
     public static Transaction genesisTransaction;
 
     public static void main(String[] args) {
-        //add our blocks to the blockchain ArrayList:
-        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
 
         //Create wallets:
         walletA = new Wallet();
