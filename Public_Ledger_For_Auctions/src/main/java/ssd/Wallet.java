@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 
 public class Wallet {
+
+    public String name;
     public PrivateKey privateKey;
     public PublicKey publicKey;
     public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>(); //only UTXOs owned by this wallet.

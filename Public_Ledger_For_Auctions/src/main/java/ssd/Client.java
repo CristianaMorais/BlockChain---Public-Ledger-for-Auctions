@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 
 import static ssd.Menus.callInitialMenu;
@@ -21,7 +23,7 @@ public class Client {
     public static Transaction genesisTransaction;
     public static int difficulty = 3;
 
-    BlockChain bc = new BlockChain();
+    static List<Wallet> listWallets = new ArrayList<>();
 
 
     public static void main(String[] args)  {
@@ -53,9 +55,11 @@ public class Client {
     }
 
     private static void createUser() {
+
         //User initialization
         Wallet user;
         user = initUser();
+        listWallets.add(user);
 
         // Calling the menu for the created user
         chUM = userMenu();
@@ -67,7 +71,7 @@ public class Client {
         while(chUM != 0) {
             switch (chUM) {
                 case 1:
-                    System.out.println("test2.1");
+                    createNewWallet();
                     break;
 
                 case 2:
@@ -83,6 +87,13 @@ public class Client {
             }
             chUM = userMenu();
         }
+    }
+
+    private static void createNewWallet() {
+        Wallet newWallet = new Wallet();
+        listWallets.add(newWallet);
+        System.out.println(Arrays.toString(listWallets.toArray()));
+
     }
 
     private static Wallet initUser() {
