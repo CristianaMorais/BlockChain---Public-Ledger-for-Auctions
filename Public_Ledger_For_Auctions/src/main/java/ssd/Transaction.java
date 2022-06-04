@@ -54,7 +54,7 @@ public class Transaction {
 
         //gather transaction inputs (Make sure they are unspent):
         for(TransactionInput i : inputs) {
-            i.UTXO = BlockChain.UTXOs.get(i.transactionOutputId);
+            i.UTXO = Client.UTXOs.get(i.transactionOutputId);
         }
 
         //check if transaction is valid:
@@ -71,13 +71,13 @@ public class Transaction {
 
         //add outputs to Unspent list
         for(TransactionOutput o : outputs) {
-            BlockChain.UTXOs.put(o.id , o);
+            Client.UTXOs.put(o.id , o);
         }
 
         //remove transaction inputs from UTXO lists as spent:
         for(TransactionInput i : inputs) {
             if(i.UTXO == null) continue; //if Transaction can't be found skip it
-            BlockChain.UTXOs.remove(i.UTXO.id);
+            Client.UTXOs.remove(i.UTXO.id);
         }
 
         return true;
