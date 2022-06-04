@@ -50,24 +50,26 @@ public class Node {
         server.start();
     }
 
-    public void ping_node(String ipaddr, String port){
+    public void ping(String ip, String port){
         int portInt = parseInt(port);
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(ipaddr, portInt).usePlaintext().build();
-        PingServiceGrpc.PingServiceBlockingStub stub = PingServiceGrpc.newBlockingStub(channel);
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(ip, portInt).usePlaintext().build();
+        PingServiceGrpc.PingServiceBlockingStub stub =
+                PingServiceGrpc.newBlockingStub(channel);
 
 
         NodeInfo node = NodeInfo.newBuilder()
-                .setIpaddr(this.ipAddr)
+                .setIp(this.ipAddr)
                 .setPort(this.udp_port)
                 .build();
 
         NodeInfo nodeInfo = stub.ping(
                 PingRequest.newBuilder()
-                        .setNodeID(ipaddr)
+                        .setId(ip)
                         .setSender(node)
                         .build());
         channel.shutdown();
     }
+
 
     // mudar para o que tinhamos
     final public String getPeerID(String id) {

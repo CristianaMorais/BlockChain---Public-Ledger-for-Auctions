@@ -9,13 +9,14 @@ public class PingServiceImpl extends PingServiceGrpc.PingServiceImplBase {
 
     @Override
     public void ping(PingRequest request, StreamObserver<NodeInfo> responseObserver){
+
         System.out.println(request);
 
-        System.out.println("Ping " + request.getSender().getNodeID());
+        System.out.println("Ping " + request.getSender().getNodeid());
 
         NodeInfo response = NodeInfo.newBuilder()
-                .setNodeID(request.getSender().getNodeID())
-                .setIpaddr(request.getSender().getNodeID())
+                .setNodeid(request.getSender().getNodeid())
+                .setIp(request.getSender().getIp())
                 .setPort(request.getSender().getPort())
                 .build();
 

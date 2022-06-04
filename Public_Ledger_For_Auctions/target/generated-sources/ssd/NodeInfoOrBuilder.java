@@ -4,28 +4,28 @@
 package ssd;
 
 public interface NodeInfoOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:NodeInfo)
+    // @@protoc_insertion_point(interface_extends:ssd.NodeInfo)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string nodeid = 1;</code>
    */
-  java.lang.String getNodeID();
+  java.lang.String getNodeid();
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string nodeid = 1;</code>
    */
   com.google.protobuf.ByteString
-      getNodeIDBytes();
+      getNodeidBytes();
 
   /**
-   * <code>optional string ipaddr = 2;</code>
+   * <code>optional string ip = 2;</code>
    */
-  java.lang.String getIpaddr();
+  java.lang.String getIp();
   /**
-   * <code>optional string ipaddr = 2;</code>
+   * <code>optional string ip = 2;</code>
    */
   com.google.protobuf.ByteString
-      getIpaddrBytes();
+      getIpBytes();
 
   /**
    * <code>optional string port = 3;</code>

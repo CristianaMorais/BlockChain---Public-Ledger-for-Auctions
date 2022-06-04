@@ -4,19 +4,19 @@
 package ssd;
 
 /**
- * Protobuf type {@code NodeInfo}
+ * Protobuf type {@code ssd.NodeInfo}
  */
 public  final class NodeInfo extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:NodeInfo)
+    // @@protoc_insertion_point(message_implements:ssd.NodeInfo)
     NodeInfoOrBuilder {
   // Use NodeInfo.newBuilder() to construct.
   private NodeInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
   private NodeInfo() {
-    nodeID_ = "";
-    ipaddr_ = "";
+    nodeid_ = "";
+    ip_ = "";
     port_ = "";
   }
 
@@ -48,13 +48,13 @@ public  final class NodeInfo extends
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            nodeID_ = s;
+            nodeid_ = s;
             break;
           }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            ipaddr_ = s;
+            ip_ = s;
             break;
           }
           case 26: {
@@ -76,78 +76,78 @@ public  final class NodeInfo extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
+    return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_fieldAccessorTable
+    return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             ssd.NodeInfo.class, ssd.NodeInfo.Builder.class);
   }
 
   public static final int NODEID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object nodeID_;
+  private volatile java.lang.Object nodeid_;
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string nodeid = 1;</code>
    */
-  public java.lang.String getNodeID() {
-    java.lang.Object ref = nodeID_;
+  public java.lang.String getNodeid() {
+    java.lang.Object ref = nodeid_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      nodeID_ = s;
+      nodeid_ = s;
       return s;
     }
   }
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string nodeid = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getNodeIDBytes() {
-    java.lang.Object ref = nodeID_;
+      getNodeidBytes() {
+    java.lang.Object ref = nodeid_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      nodeID_ = b;
+      nodeid_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int IPADDR_FIELD_NUMBER = 2;
-  private volatile java.lang.Object ipaddr_;
+  public static final int IP_FIELD_NUMBER = 2;
+  private volatile java.lang.Object ip_;
   /**
-   * <code>optional string ipaddr = 2;</code>
+   * <code>optional string ip = 2;</code>
    */
-  public java.lang.String getIpaddr() {
-    java.lang.Object ref = ipaddr_;
+  public java.lang.String getIp() {
+    java.lang.Object ref = ip_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      ipaddr_ = s;
+      ip_ = s;
       return s;
     }
   }
   /**
-   * <code>optional string ipaddr = 2;</code>
+   * <code>optional string ip = 2;</code>
    */
   public com.google.protobuf.ByteString
-      getIpaddrBytes() {
-    java.lang.Object ref = ipaddr_;
+      getIpBytes() {
+    java.lang.Object ref = ip_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      ipaddr_ = b;
+      ip_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -200,11 +200,11 @@ public  final class NodeInfo extends
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getNodeIDBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, nodeID_);
+    if (!getNodeidBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, nodeid_);
     }
-    if (!getIpaddrBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, ipaddr_);
+    if (!getIpBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, ip_);
     }
     if (!getPortBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, port_);
@@ -216,11 +216,11 @@ public  final class NodeInfo extends
     if (size != -1) return size;
 
     size = 0;
-    if (!getNodeIDBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, nodeID_);
+    if (!getNodeidBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, nodeid_);
     }
-    if (!getIpaddrBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, ipaddr_);
+    if (!getIpBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, ip_);
     }
     if (!getPortBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, port_);
@@ -241,10 +241,10 @@ public  final class NodeInfo extends
     ssd.NodeInfo other = (ssd.NodeInfo) obj;
 
     boolean result = true;
-    result = result && getNodeID()
-        .equals(other.getNodeID());
-    result = result && getIpaddr()
-        .equals(other.getIpaddr());
+    result = result && getNodeid()
+        .equals(other.getNodeid());
+    result = result && getIp()
+        .equals(other.getIp());
     result = result && getPort()
         .equals(other.getPort());
     return result;
@@ -258,9 +258,9 @@ public  final class NodeInfo extends
     int hash = 41;
     hash = (19 * hash) + getDescriptorForType().hashCode();
     hash = (37 * hash) + NODEID_FIELD_NUMBER;
-    hash = (53 * hash) + getNodeID().hashCode();
-    hash = (37 * hash) + IPADDR_FIELD_NUMBER;
-    hash = (53 * hash) + getIpaddr().hashCode();
+    hash = (53 * hash) + getNodeid().hashCode();
+    hash = (37 * hash) + IP_FIELD_NUMBER;
+    hash = (53 * hash) + getIp().hashCode();
     hash = (37 * hash) + PORT_FIELD_NUMBER;
     hash = (53 * hash) + getPort().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -346,20 +346,20 @@ public  final class NodeInfo extends
     return builder;
   }
   /**
-   * Protobuf type {@code NodeInfo}
+   * Protobuf type {@code ssd.NodeInfo}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:NodeInfo)
+      // @@protoc_insertion_point(builder_implements:ssd.NodeInfo)
       ssd.NodeInfoOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
+      return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_fieldAccessorTable
+      return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               ssd.NodeInfo.class, ssd.NodeInfo.Builder.class);
     }
@@ -381,9 +381,9 @@ public  final class NodeInfo extends
     }
     public Builder clear() {
       super.clear();
-      nodeID_ = "";
+      nodeid_ = "";
 
-      ipaddr_ = "";
+      ip_ = "";
 
       port_ = "";
 
@@ -392,7 +392,7 @@ public  final class NodeInfo extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
+      return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_descriptor;
     }
 
     public ssd.NodeInfo getDefaultInstanceForType() {
@@ -409,8 +409,8 @@ public  final class NodeInfo extends
 
     public ssd.NodeInfo buildPartial() {
       ssd.NodeInfo result = new ssd.NodeInfo(this);
-      result.nodeID_ = nodeID_;
-      result.ipaddr_ = ipaddr_;
+      result.nodeid_ = nodeid_;
+      result.ip_ = ip_;
       result.port_ = port_;
       onBuilt();
       return result;
@@ -453,12 +453,12 @@ public  final class NodeInfo extends
 
     public Builder mergeFrom(ssd.NodeInfo other) {
       if (other == ssd.NodeInfo.getDefaultInstance()) return this;
-      if (!other.getNodeID().isEmpty()) {
-        nodeID_ = other.nodeID_;
+      if (!other.getNodeid().isEmpty()) {
+        nodeid_ = other.nodeid_;
         onChanged();
       }
-      if (!other.getIpaddr().isEmpty()) {
-        ipaddr_ = other.ipaddr_;
+      if (!other.getIp().isEmpty()) {
+        ip_ = other.ip_;
         onChanged();
       }
       if (!other.getPort().isEmpty()) {
@@ -491,140 +491,140 @@ public  final class NodeInfo extends
       return this;
     }
 
-    private java.lang.Object nodeID_ = "";
+    private java.lang.Object nodeid_ = "";
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string nodeid = 1;</code>
      */
-    public java.lang.String getNodeID() {
-      java.lang.Object ref = nodeID_;
+    public java.lang.String getNodeid() {
+      java.lang.Object ref = nodeid_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        nodeID_ = s;
+        nodeid_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string nodeid = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getNodeIDBytes() {
-      java.lang.Object ref = nodeID_;
+        getNodeidBytes() {
+      java.lang.Object ref = nodeid_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        nodeID_ = b;
+        nodeid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string nodeid = 1;</code>
      */
-    public Builder setNodeID(
+    public Builder setNodeid(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      nodeID_ = value;
+      nodeid_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string nodeid = 1;</code>
      */
-    public Builder clearNodeID() {
+    public Builder clearNodeid() {
       
-      nodeID_ = getDefaultInstance().getNodeID();
+      nodeid_ = getDefaultInstance().getNodeid();
       onChanged();
       return this;
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string nodeid = 1;</code>
      */
-    public Builder setNodeIDBytes(
+    public Builder setNodeidBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      nodeID_ = value;
+      nodeid_ = value;
       onChanged();
       return this;
     }
 
-    private java.lang.Object ipaddr_ = "";
+    private java.lang.Object ip_ = "";
     /**
-     * <code>optional string ipaddr = 2;</code>
+     * <code>optional string ip = 2;</code>
      */
-    public java.lang.String getIpaddr() {
-      java.lang.Object ref = ipaddr_;
+    public java.lang.String getIp() {
+      java.lang.Object ref = ip_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        ipaddr_ = s;
+        ip_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>optional string ipaddr = 2;</code>
+     * <code>optional string ip = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getIpaddrBytes() {
-      java.lang.Object ref = ipaddr_;
+        getIpBytes() {
+      java.lang.Object ref = ip_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        ipaddr_ = b;
+        ip_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>optional string ipaddr = 2;</code>
+     * <code>optional string ip = 2;</code>
      */
-    public Builder setIpaddr(
+    public Builder setIp(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      ipaddr_ = value;
+      ip_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>optional string ipaddr = 2;</code>
+     * <code>optional string ip = 2;</code>
      */
-    public Builder clearIpaddr() {
+    public Builder clearIp() {
       
-      ipaddr_ = getDefaultInstance().getIpaddr();
+      ip_ = getDefaultInstance().getIp();
       onChanged();
       return this;
     }
     /**
-     * <code>optional string ipaddr = 2;</code>
+     * <code>optional string ip = 2;</code>
      */
-    public Builder setIpaddrBytes(
+    public Builder setIpBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      ipaddr_ = value;
+      ip_ = value;
       onChanged();
       return this;
     }
@@ -708,10 +708,10 @@ public  final class NodeInfo extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:NodeInfo)
+    // @@protoc_insertion_point(builder_scope:ssd.NodeInfo)
   }
 
-  // @@protoc_insertion_point(class_scope:NodeInfo)
+  // @@protoc_insertion_point(class_scope:ssd.NodeInfo)
   private static final ssd.NodeInfo DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new ssd.NodeInfo();

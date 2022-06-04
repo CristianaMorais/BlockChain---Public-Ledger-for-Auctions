@@ -24,7 +24,7 @@ public class PingServiceGrpc {
 
   private PingServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "PingService";
+  public static final String SERVICE_NAME = "ssd.PingService";
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
@@ -33,7 +33,7 @@ public class PingServiceGrpc {
       io.grpc.MethodDescriptor.create(
           io.grpc.MethodDescriptor.MethodType.UNARY,
           generateFullMethodName(
-              "PingService", "Ping"),
+              "ssd.PingService", "Ping"),
           io.grpc.protobuf.ProtoUtils.marshaller(ssd.PingRequest.getDefaultInstance()),
           io.grpc.protobuf.ProtoUtils.marshaller(ssd.NodeInfo.getDefaultInstance()));
 

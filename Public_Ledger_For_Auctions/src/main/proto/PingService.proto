@@ -1,20 +1,19 @@
 syntax = "proto3";
+package ssd;
 
 option java_multiple_files = true;
-option java_package = "ssd";
-option java_outer_classname = "Public_Ledger_For_Auctions";
 
 service PingService {
   rpc Ping (PingRequest) returns (NodeInfo);
 }
 
 message PingRequest {
-  string nodeID = 1;
+  string id = 1;
   NodeInfo sender = 2;
 }
 
 message NodeInfo {
-  string nodeID = 1;
-  string ipaddr = 2;
+  string nodeid = 1;
+  string ip = 2;
   string port = 3;
 }

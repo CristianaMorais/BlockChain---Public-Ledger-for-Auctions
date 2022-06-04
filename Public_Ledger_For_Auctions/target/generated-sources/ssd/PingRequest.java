@@ -4,18 +4,18 @@
 package ssd;
 
 /**
- * Protobuf type {@code PingRequest}
+ * Protobuf type {@code ssd.PingRequest}
  */
 public  final class PingRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:PingRequest)
+    // @@protoc_insertion_point(message_implements:ssd.PingRequest)
     PingRequestOrBuilder {
   // Use PingRequest.newBuilder() to construct.
   private PingRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
   private PingRequest() {
-    nodeID_ = "";
+    id_ = "";
   }
 
   @java.lang.Override
@@ -46,7 +46,7 @@ public  final class PingRequest extends
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            nodeID_ = s;
+            id_ = s;
             break;
           }
           case 18: {
@@ -75,44 +75,44 @@ public  final class PingRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
+    return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_fieldAccessorTable
+    return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             ssd.PingRequest.class, ssd.PingRequest.Builder.class);
   }
 
-  public static final int NODEID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object nodeID_;
+  public static final int ID_FIELD_NUMBER = 1;
+  private volatile java.lang.Object id_;
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string id = 1;</code>
    */
-  public java.lang.String getNodeID() {
-    java.lang.Object ref = nodeID_;
+  public java.lang.String getId() {
+    java.lang.Object ref = id_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      nodeID_ = s;
+      id_ = s;
       return s;
     }
   }
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string id = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getNodeIDBytes() {
-    java.lang.Object ref = nodeID_;
+      getIdBytes() {
+    java.lang.Object ref = id_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      nodeID_ = b;
+      id_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -122,19 +122,19 @@ public  final class PingRequest extends
   public static final int SENDER_FIELD_NUMBER = 2;
   private ssd.NodeInfo sender_;
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional .ssd.NodeInfo sender = 2;</code>
    */
   public boolean hasSender() {
     return sender_ != null;
   }
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional .ssd.NodeInfo sender = 2;</code>
    */
   public ssd.NodeInfo getSender() {
     return sender_ == null ? ssd.NodeInfo.getDefaultInstance() : sender_;
   }
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional .ssd.NodeInfo sender = 2;</code>
    */
   public ssd.NodeInfoOrBuilder getSenderOrBuilder() {
     return getSender();
@@ -152,8 +152,8 @@ public  final class PingRequest extends
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getNodeIDBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, nodeID_);
+    if (!getIdBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
     }
     if (sender_ != null) {
       output.writeMessage(2, getSender());
@@ -165,8 +165,8 @@ public  final class PingRequest extends
     if (size != -1) return size;
 
     size = 0;
-    if (!getNodeIDBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, nodeID_);
+    if (!getIdBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
     }
     if (sender_ != null) {
       size += com.google.protobuf.CodedOutputStream
@@ -188,8 +188,8 @@ public  final class PingRequest extends
     ssd.PingRequest other = (ssd.PingRequest) obj;
 
     boolean result = true;
-    result = result && getNodeID()
-        .equals(other.getNodeID());
+    result = result && getId()
+        .equals(other.getId());
     result = result && (hasSender() == other.hasSender());
     if (hasSender()) {
       result = result && getSender()
@@ -205,8 +205,8 @@ public  final class PingRequest extends
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptorForType().hashCode();
-    hash = (37 * hash) + NODEID_FIELD_NUMBER;
-    hash = (53 * hash) + getNodeID().hashCode();
+    hash = (37 * hash) + ID_FIELD_NUMBER;
+    hash = (53 * hash) + getId().hashCode();
     if (hasSender()) {
       hash = (37 * hash) + SENDER_FIELD_NUMBER;
       hash = (53 * hash) + getSender().hashCode();
@@ -294,20 +294,20 @@ public  final class PingRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code PingRequest}
+   * Protobuf type {@code ssd.PingRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:PingRequest)
+      // @@protoc_insertion_point(builder_implements:ssd.PingRequest)
       ssd.PingRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
+      return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_fieldAccessorTable
+      return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               ssd.PingRequest.class, ssd.PingRequest.Builder.class);
     }
@@ -329,7 +329,7 @@ public  final class PingRequest extends
     }
     public Builder clear() {
       super.clear();
-      nodeID_ = "";
+      id_ = "";
 
       if (senderBuilder_ == null) {
         sender_ = null;
@@ -342,7 +342,7 @@ public  final class PingRequest extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
+      return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_descriptor;
     }
 
     public ssd.PingRequest getDefaultInstanceForType() {
@@ -359,7 +359,7 @@ public  final class PingRequest extends
 
     public ssd.PingRequest buildPartial() {
       ssd.PingRequest result = new ssd.PingRequest(this);
-      result.nodeID_ = nodeID_;
+      result.id_ = id_;
       if (senderBuilder_ == null) {
         result.sender_ = sender_;
       } else {
@@ -406,8 +406,8 @@ public  final class PingRequest extends
 
     public Builder mergeFrom(ssd.PingRequest other) {
       if (other == ssd.PingRequest.getDefaultInstance()) return this;
-      if (!other.getNodeID().isEmpty()) {
-        nodeID_ = other.nodeID_;
+      if (!other.getId().isEmpty()) {
+        id_ = other.id_;
         onChanged();
       }
       if (other.hasSender()) {
@@ -439,71 +439,71 @@ public  final class PingRequest extends
       return this;
     }
 
-    private java.lang.Object nodeID_ = "";
+    private java.lang.Object id_ = "";
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string id = 1;</code>
      */
-    public java.lang.String getNodeID() {
-      java.lang.Object ref = nodeID_;
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        nodeID_ = s;
+        id_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string id = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getNodeIDBytes() {
-      java.lang.Object ref = nodeID_;
+        getIdBytes() {
+      java.lang.Object ref = id_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        nodeID_ = b;
+        id_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string id = 1;</code>
      */
-    public Builder setNodeID(
+    public Builder setId(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      nodeID_ = value;
+      id_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string id = 1;</code>
      */
-    public Builder clearNodeID() {
+    public Builder clearId() {
       
-      nodeID_ = getDefaultInstance().getNodeID();
+      id_ = getDefaultInstance().getId();
       onChanged();
       return this;
     }
     /**
-     * <code>optional string nodeID = 1;</code>
+     * <code>optional string id = 1;</code>
      */
-    public Builder setNodeIDBytes(
+    public Builder setIdBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      nodeID_ = value;
+      id_ = value;
       onChanged();
       return this;
     }
@@ -512,13 +512,13 @@ public  final class PingRequest extends
     private com.google.protobuf.SingleFieldBuilderV3<
         ssd.NodeInfo, ssd.NodeInfo.Builder, ssd.NodeInfoOrBuilder> senderBuilder_;
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public boolean hasSender() {
       return senderBuilder_ != null || sender_ != null;
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public ssd.NodeInfo getSender() {
       if (senderBuilder_ == null) {
@@ -528,7 +528,7 @@ public  final class PingRequest extends
       }
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public Builder setSender(ssd.NodeInfo value) {
       if (senderBuilder_ == null) {
@@ -544,7 +544,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public Builder setSender(
         ssd.NodeInfo.Builder builderForValue) {
@@ -558,7 +558,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public Builder mergeSender(ssd.NodeInfo value) {
       if (senderBuilder_ == null) {
@@ -576,7 +576,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public Builder clearSender() {
       if (senderBuilder_ == null) {
@@ -590,7 +590,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public ssd.NodeInfo.Builder getSenderBuilder() {
       
@@ -598,7 +598,7 @@ public  final class PingRequest extends
       return getSenderFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     public ssd.NodeInfoOrBuilder getSenderOrBuilder() {
       if (senderBuilder_ != null) {
@@ -609,7 +609,7 @@ public  final class PingRequest extends
       }
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional .ssd.NodeInfo sender = 2;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         ssd.NodeInfo, ssd.NodeInfo.Builder, ssd.NodeInfoOrBuilder> 
@@ -635,10 +635,10 @@ public  final class PingRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:PingRequest)
+    // @@protoc_insertion_point(builder_scope:ssd.PingRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:PingRequest)
+  // @@protoc_insertion_point(class_scope:ssd.PingRequest)
   private static final ssd.PingRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new ssd.PingRequest();

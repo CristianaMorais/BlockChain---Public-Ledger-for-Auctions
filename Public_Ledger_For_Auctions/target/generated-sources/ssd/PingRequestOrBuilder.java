@@ -4,29 +4,29 @@
 package ssd;
 
 public interface PingRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:PingRequest)
+    // @@protoc_insertion_point(interface_extends:ssd.PingRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string id = 1;</code>
    */
-  java.lang.String getNodeID();
+  java.lang.String getId();
   /**
-   * <code>optional string nodeID = 1;</code>
+   * <code>optional string id = 1;</code>
    */
   com.google.protobuf.ByteString
-      getNodeIDBytes();
+      getIdBytes();
 
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional .ssd.NodeInfo sender = 2;</code>
    */
   boolean hasSender();
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional .ssd.NodeInfo sender = 2;</code>
    */
   ssd.NodeInfo getSender();
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional .ssd.NodeInfo sender = 2;</code>
    */
   ssd.NodeInfoOrBuilder getSenderOrBuilder();
 }
