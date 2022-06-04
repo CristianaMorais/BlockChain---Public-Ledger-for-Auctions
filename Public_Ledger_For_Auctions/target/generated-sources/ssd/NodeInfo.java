@@ -4,18 +4,20 @@
 package ssd;
 
 /**
- * Protobuf type {@code PingRequest}
+ * Protobuf type {@code NodeInfo}
  */
-public  final class PingRequest extends
+public  final class NodeInfo extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:PingRequest)
-    PingRequestOrBuilder {
-  // Use PingRequest.newBuilder() to construct.
-  private PingRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // @@protoc_insertion_point(message_implements:NodeInfo)
+    NodeInfoOrBuilder {
+  // Use NodeInfo.newBuilder() to construct.
+  private NodeInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private PingRequest() {
+  private NodeInfo() {
     nodeID_ = "";
+    ipaddr_ = "";
+    port_ = "";
   }
 
   @java.lang.Override
@@ -23,7 +25,7 @@ public  final class PingRequest extends
   getUnknownFields() {
     return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
   }
-  private PingRequest(
+  private NodeInfo(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -50,16 +52,15 @@ public  final class PingRequest extends
             break;
           }
           case 18: {
-            ssd.NodeInfo.Builder subBuilder = null;
-            if (sender_ != null) {
-              subBuilder = sender_.toBuilder();
-            }
-            sender_ = input.readMessage(ssd.NodeInfo.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(sender_);
-              sender_ = subBuilder.buildPartial();
-            }
+            java.lang.String s = input.readStringRequireUtf8();
 
+            ipaddr_ = s;
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            port_ = s;
             break;
           }
         }
@@ -75,14 +76,14 @@ public  final class PingRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
+    return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_fieldAccessorTable
+    return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            ssd.PingRequest.class, ssd.PingRequest.Builder.class);
+            ssd.NodeInfo.class, ssd.NodeInfo.Builder.class);
   }
 
   public static final int NODEID_FIELD_NUMBER = 1;
@@ -119,25 +120,72 @@ public  final class PingRequest extends
     }
   }
 
-  public static final int SENDER_FIELD_NUMBER = 2;
-  private ssd.NodeInfo sender_;
+  public static final int IPADDR_FIELD_NUMBER = 2;
+  private volatile java.lang.Object ipaddr_;
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional string ipaddr = 2;</code>
    */
-  public boolean hasSender() {
-    return sender_ != null;
+  public java.lang.String getIpaddr() {
+    java.lang.Object ref = ipaddr_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      ipaddr_ = s;
+      return s;
+    }
   }
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional string ipaddr = 2;</code>
    */
-  public ssd.NodeInfo getSender() {
-    return sender_ == null ? ssd.NodeInfo.getDefaultInstance() : sender_;
+  public com.google.protobuf.ByteString
+      getIpaddrBytes() {
+    java.lang.Object ref = ipaddr_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      ipaddr_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int PORT_FIELD_NUMBER = 3;
+  private volatile java.lang.Object port_;
+  /**
+   * <code>optional string port = 3;</code>
+   */
+  public java.lang.String getPort() {
+    java.lang.Object ref = port_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      port_ = s;
+      return s;
+    }
   }
   /**
-   * <code>optional .NodeInfo sender = 2;</code>
+   * <code>optional string port = 3;</code>
    */
-  public ssd.NodeInfoOrBuilder getSenderOrBuilder() {
-    return getSender();
+  public com.google.protobuf.ByteString
+      getPortBytes() {
+    java.lang.Object ref = port_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      port_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -155,8 +203,11 @@ public  final class PingRequest extends
     if (!getNodeIDBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, nodeID_);
     }
-    if (sender_ != null) {
-      output.writeMessage(2, getSender());
+    if (!getIpaddrBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, ipaddr_);
+    }
+    if (!getPortBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, port_);
     }
   }
 
@@ -168,9 +219,11 @@ public  final class PingRequest extends
     if (!getNodeIDBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, nodeID_);
     }
-    if (sender_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getSender());
+    if (!getIpaddrBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, ipaddr_);
+    }
+    if (!getPortBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, port_);
     }
     memoizedSize = size;
     return size;
@@ -182,19 +235,18 @@ public  final class PingRequest extends
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof ssd.PingRequest)) {
+    if (!(obj instanceof ssd.NodeInfo)) {
       return super.equals(obj);
     }
-    ssd.PingRequest other = (ssd.PingRequest) obj;
+    ssd.NodeInfo other = (ssd.NodeInfo) obj;
 
     boolean result = true;
     result = result && getNodeID()
         .equals(other.getNodeID());
-    result = result && (hasSender() == other.hasSender());
-    if (hasSender()) {
-      result = result && getSender()
-          .equals(other.getSender());
-    }
+    result = result && getIpaddr()
+        .equals(other.getIpaddr());
+    result = result && getPort()
+        .equals(other.getPort());
     return result;
   }
 
@@ -207,67 +259,67 @@ public  final class PingRequest extends
     hash = (19 * hash) + getDescriptorForType().hashCode();
     hash = (37 * hash) + NODEID_FIELD_NUMBER;
     hash = (53 * hash) + getNodeID().hashCode();
-    if (hasSender()) {
-      hash = (37 * hash) + SENDER_FIELD_NUMBER;
-      hash = (53 * hash) + getSender().hashCode();
-    }
+    hash = (37 * hash) + IPADDR_FIELD_NUMBER;
+    hash = (53 * hash) + getIpaddr().hashCode();
+    hash = (37 * hash) + PORT_FIELD_NUMBER;
+    hash = (53 * hash) + getPort().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static ssd.PingRequest parseFrom(
+  public static ssd.NodeInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static ssd.PingRequest parseFrom(
+  public static ssd.NodeInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static ssd.PingRequest parseFrom(byte[] data)
+  public static ssd.NodeInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static ssd.PingRequest parseFrom(
+  public static ssd.NodeInfo parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static ssd.PingRequest parseFrom(java.io.InputStream input)
+  public static ssd.NodeInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static ssd.PingRequest parseFrom(
+  public static ssd.NodeInfo parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static ssd.PingRequest parseDelimitedFrom(java.io.InputStream input)
+  public static ssd.NodeInfo parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static ssd.PingRequest parseDelimitedFrom(
+  public static ssd.NodeInfo parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static ssd.PingRequest parseFrom(
+  public static ssd.NodeInfo parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static ssd.PingRequest parseFrom(
+  public static ssd.NodeInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -279,7 +331,7 @@ public  final class PingRequest extends
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(ssd.PingRequest prototype) {
+  public static Builder newBuilder(ssd.NodeInfo prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -294,25 +346,25 @@ public  final class PingRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code PingRequest}
+   * Protobuf type {@code NodeInfo}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:PingRequest)
-      ssd.PingRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:NodeInfo)
+      ssd.NodeInfoOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
+      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_fieldAccessorTable
+      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              ssd.PingRequest.class, ssd.PingRequest.Builder.class);
+              ssd.NodeInfo.class, ssd.NodeInfo.Builder.class);
     }
 
-    // Construct using ssd.PingRequest.newBuilder()
+    // Construct using ssd.NodeInfo.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -331,40 +383,35 @@ public  final class PingRequest extends
       super.clear();
       nodeID_ = "";
 
-      if (senderBuilder_ == null) {
-        sender_ = null;
-      } else {
-        sender_ = null;
-        senderBuilder_ = null;
-      }
+      ipaddr_ = "";
+
+      port_ = "";
+
       return this;
     }
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
+      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
     }
 
-    public ssd.PingRequest getDefaultInstanceForType() {
-      return ssd.PingRequest.getDefaultInstance();
+    public ssd.NodeInfo getDefaultInstanceForType() {
+      return ssd.NodeInfo.getDefaultInstance();
     }
 
-    public ssd.PingRequest build() {
-      ssd.PingRequest result = buildPartial();
+    public ssd.NodeInfo build() {
+      ssd.NodeInfo result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public ssd.PingRequest buildPartial() {
-      ssd.PingRequest result = new ssd.PingRequest(this);
+    public ssd.NodeInfo buildPartial() {
+      ssd.NodeInfo result = new ssd.NodeInfo(this);
       result.nodeID_ = nodeID_;
-      if (senderBuilder_ == null) {
-        result.sender_ = sender_;
-      } else {
-        result.sender_ = senderBuilder_.build();
-      }
+      result.ipaddr_ = ipaddr_;
+      result.port_ = port_;
       onBuilt();
       return result;
     }
@@ -396,22 +443,27 @@ public  final class PingRequest extends
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof ssd.PingRequest) {
-        return mergeFrom((ssd.PingRequest)other);
+      if (other instanceof ssd.NodeInfo) {
+        return mergeFrom((ssd.NodeInfo)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(ssd.PingRequest other) {
-      if (other == ssd.PingRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(ssd.NodeInfo other) {
+      if (other == ssd.NodeInfo.getDefaultInstance()) return this;
       if (!other.getNodeID().isEmpty()) {
         nodeID_ = other.nodeID_;
         onChanged();
       }
-      if (other.hasSender()) {
-        mergeSender(other.getSender());
+      if (!other.getIpaddr().isEmpty()) {
+        ipaddr_ = other.ipaddr_;
+        onChanged();
+      }
+      if (!other.getPort().isEmpty()) {
+        port_ = other.port_;
+        onChanged();
       }
       onChanged();
       return this;
@@ -425,11 +477,11 @@ public  final class PingRequest extends
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      ssd.PingRequest parsedMessage = null;
+      ssd.NodeInfo parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (ssd.PingRequest) e.getUnfinishedMessage();
+        parsedMessage = (ssd.NodeInfo) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -508,121 +560,142 @@ public  final class PingRequest extends
       return this;
     }
 
-    private ssd.NodeInfo sender_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        ssd.NodeInfo, ssd.NodeInfo.Builder, ssd.NodeInfoOrBuilder> senderBuilder_;
+    private java.lang.Object ipaddr_ = "";
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional string ipaddr = 2;</code>
      */
-    public boolean hasSender() {
-      return senderBuilder_ != null || sender_ != null;
-    }
-    /**
-     * <code>optional .NodeInfo sender = 2;</code>
-     */
-    public ssd.NodeInfo getSender() {
-      if (senderBuilder_ == null) {
-        return sender_ == null ? ssd.NodeInfo.getDefaultInstance() : sender_;
+    public java.lang.String getIpaddr() {
+      java.lang.Object ref = ipaddr_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        ipaddr_ = s;
+        return s;
       } else {
-        return senderBuilder_.getMessage();
+        return (java.lang.String) ref;
       }
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional string ipaddr = 2;</code>
      */
-    public Builder setSender(ssd.NodeInfo value) {
-      if (senderBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        sender_ = value;
-        onChanged();
+    public com.google.protobuf.ByteString
+        getIpaddrBytes() {
+      java.lang.Object ref = ipaddr_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        ipaddr_ = b;
+        return b;
       } else {
-        senderBuilder_.setMessage(value);
+        return (com.google.protobuf.ByteString) ref;
       }
-
-      return this;
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional string ipaddr = 2;</code>
      */
-    public Builder setSender(
-        ssd.NodeInfo.Builder builderForValue) {
-      if (senderBuilder_ == null) {
-        sender_ = builderForValue.build();
-        onChanged();
-      } else {
-        senderBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>optional .NodeInfo sender = 2;</code>
-     */
-    public Builder mergeSender(ssd.NodeInfo value) {
-      if (senderBuilder_ == null) {
-        if (sender_ != null) {
-          sender_ =
-            ssd.NodeInfo.newBuilder(sender_).mergeFrom(value).buildPartial();
-        } else {
-          sender_ = value;
-        }
-        onChanged();
-      } else {
-        senderBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>optional .NodeInfo sender = 2;</code>
-     */
-    public Builder clearSender() {
-      if (senderBuilder_ == null) {
-        sender_ = null;
-        onChanged();
-      } else {
-        sender_ = null;
-        senderBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>optional .NodeInfo sender = 2;</code>
-     */
-    public ssd.NodeInfo.Builder getSenderBuilder() {
-      
+    public Builder setIpaddr(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      ipaddr_ = value;
       onChanged();
-      return getSenderFieldBuilder().getBuilder();
+      return this;
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional string ipaddr = 2;</code>
      */
-    public ssd.NodeInfoOrBuilder getSenderOrBuilder() {
-      if (senderBuilder_ != null) {
-        return senderBuilder_.getMessageOrBuilder();
+    public Builder clearIpaddr() {
+      
+      ipaddr_ = getDefaultInstance().getIpaddr();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional string ipaddr = 2;</code>
+     */
+    public Builder setIpaddrBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      ipaddr_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object port_ = "";
+    /**
+     * <code>optional string port = 3;</code>
+     */
+    public java.lang.String getPort() {
+      java.lang.Object ref = port_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        port_ = s;
+        return s;
       } else {
-        return sender_ == null ?
-            ssd.NodeInfo.getDefaultInstance() : sender_;
+        return (java.lang.String) ref;
       }
     }
     /**
-     * <code>optional .NodeInfo sender = 2;</code>
+     * <code>optional string port = 3;</code>
      */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        ssd.NodeInfo, ssd.NodeInfo.Builder, ssd.NodeInfoOrBuilder> 
-        getSenderFieldBuilder() {
-      if (senderBuilder_ == null) {
-        senderBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            ssd.NodeInfo, ssd.NodeInfo.Builder, ssd.NodeInfoOrBuilder>(
-                getSender(),
-                getParentForChildren(),
-                isClean());
-        sender_ = null;
+    public com.google.protobuf.ByteString
+        getPortBytes() {
+      java.lang.Object ref = port_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        port_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
       }
-      return senderBuilder_;
+    }
+    /**
+     * <code>optional string port = 3;</code>
+     */
+    public Builder setPort(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      port_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional string port = 3;</code>
+     */
+    public Builder clearPort() {
+      
+      port_ = getDefaultInstance().getPort();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional string port = 3;</code>
+     */
+    public Builder setPortBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      port_ = value;
+      onChanged();
+      return this;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -635,39 +708,39 @@ public  final class PingRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:PingRequest)
+    // @@protoc_insertion_point(builder_scope:NodeInfo)
   }
 
-  // @@protoc_insertion_point(class_scope:PingRequest)
-  private static final ssd.PingRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:NodeInfo)
+  private static final ssd.NodeInfo DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new ssd.PingRequest();
+    DEFAULT_INSTANCE = new ssd.NodeInfo();
   }
 
-  public static ssd.PingRequest getDefaultInstance() {
+  public static ssd.NodeInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<PingRequest>
-      PARSER = new com.google.protobuf.AbstractParser<PingRequest>() {
-    public PingRequest parsePartialFrom(
+  private static final com.google.protobuf.Parser<NodeInfo>
+      PARSER = new com.google.protobuf.AbstractParser<NodeInfo>() {
+    public NodeInfo parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-        return new PingRequest(input, extensionRegistry);
+        return new NodeInfo(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<PingRequest> parser() {
+  public static com.google.protobuf.Parser<NodeInfo> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<PingRequest> getParserForType() {
+  public com.google.protobuf.Parser<NodeInfo> getParserForType() {
     return PARSER;
   }
 
-  public ssd.PingRequest getDefaultInstanceForType() {
+  public ssd.NodeInfo getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

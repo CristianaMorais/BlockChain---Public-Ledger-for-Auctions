@@ -8,12 +8,25 @@ public interface PingRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>optional string request = 1;</code>
+   * <code>optional string nodeID = 1;</code>
    */
-  java.lang.String getRequest();
+  java.lang.String getNodeID();
   /**
-   * <code>optional string request = 1;</code>
+   * <code>optional string nodeID = 1;</code>
    */
   com.google.protobuf.ByteString
-      getRequestBytes();
+      getNodeIDBytes();
+
+  /**
+   * <code>optional .NodeInfo sender = 2;</code>
+   */
+  boolean hasSender();
+  /**
+   * <code>optional .NodeInfo sender = 2;</code>
+   */
+  ssd.NodeInfo getSender();
+  /**
+   * <code>optional .NodeInfo sender = 2;</code>
+   */
+  ssd.NodeInfoOrBuilder getSenderOrBuilder();
 }

@@ -5,14 +5,16 @@ option java_package = "ssd";
 option java_outer_classname = "Public_Ledger_For_Auctions";
 
 service PingService {
-  rpc Ping (PingRequest) returns (PingResponse);
+  rpc Ping (PingRequest) returns (NodeInfo);
 }
 
 message PingRequest {
-  bytes  nodeID = 1;
-  int32 sender = 2;
+  string nodeID = 1;
+  NodeInfo sender = 2;
 }
 
-message PingResponse {
-  string response = 1;
+message NodeInfo {
+  string nodeID = 1;
+  string ipaddr = 2;
+  string port = 3;
 }

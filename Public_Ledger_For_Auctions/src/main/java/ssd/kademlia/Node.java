@@ -1,196 +1,100 @@
 package ssd.kademlia;
 
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.util.encoders.Hex;
-import ssd.BlockChain;
+import ssd.NodeInfo;
+import ssd.PingRequest;
+import ssd.PingServiceGrpc;
 import ssd.kademlia.grpc.PingServiceImpl;
 
 import java.io.IOException;
-import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+
+import static java.lang.Integer.parseInt;
 
 public class Node {
-    private static final Logger logger = Logger.getLogger(Node.class.getName());
+
+    public String nodeId;
+    public String ipAddr;
+    public String udp_port;
 
 
-    /*
-    In kad algorithm, the concept of k-bucket is used to store the state information of
-    other neighboring nodes, which is composed of (IP address, UDP port, node ID)
-    data list (kad network exchanges information by UDP protocol).
-    */
-    private final String ipaddr;
-    private final int udp_port;
-    private final String nodeID;
-    final int K_NODES = 20; //Number of adjacent nodes to store on the bucket
+    public Node(String ip, String port){
+        this.nodeId = String.valueOf(Math.random()).substring(2);
+        this.ipAddr = ip;
+        this.udp_port = port;
 
-
-    LinkedList<Node> bucket = new LinkedList<Node>(); //List which represents the bucket
-    Hashtable<String, BigInteger> ht_distance = new Hashtable<String, BigInteger>();
-
-
-    private final BlockChain bc;
-
-    public Node(String ipaddr, int udp_port, String nodeID){
-        this.ipaddr = ipaddr;
-        this.udp_port = udp_port;
-        this.nodeID = this.generateNodeID() ;
-        this.bc = new BlockChain();
-    }
-
-    private String generateNodeID() {
-        byte[] b_arr = new byte[20]; // 160 bits = 20 bytes
-        new SecureRandom().nextBytes(b_arr);
-        return hash_functionSHA1(b_arr);
-    }
-
-    private String hash_functionSHA1(byte[] s) {
-        SHA1Digest sha1 = new SHA1Digest();
-
-        byte[] hash = new byte[sha1.getDigestSize()];
-
-        sha1.update(s, 0, s.length);
-        sha1.doFinal(hash,0);
-
-        return Hex.toHexString(hash);
-    }
-    public String getNodeID() {
-        return this.nodeID;
-    }
-
-    public String getIpaddr() {
-        return this.ipaddr;
-    }
-
-    public Node getNodeFromBucketByNodeID( String nodeId )
-    {
-        Node node = null;
-
-        for(int i = 0; i < bucket.size(); i++ )
-        {
-            node = bucket.get( i );
-
-            if( node.getNodeID().equals( nodeId ) )
-                return  node;
+        try{
+            server();
         }
-
-        return null;
-    }
-
- /*   public BlockChain getBlockChain() {
-        return this.bc;
-    }
-*/
-    public BigInteger getDistance(Node n1, Node n2) {
-        BigInteger node1 = new BigInteger(n1.getNodeID(), 16);
-        BigInteger node2 = new BigInteger(n2.getNodeID(), 16);
-        BigInteger distance = node1.xor(node2);
-
-        return distance;
-    }
-
-    public boolean isBiggerThan( BigInteger distance1, BigInteger distance2) {
-        return distance1.compareTo( distance2 ) == 1;
-    }
-
-    public void addAdjNode( Node node)
-    {
-        if ( bucket.size() == this.K_NODES )
-        {
-            String maxNodeId = maxDistanceNode();
-            logger.info("Nodes with large distance: " + maxNodeId );
-            logger.info("New nodeID: " +node.getNodeID() );
-            BigInteger distance_node = getDistance(node, this);
-
-            if (isBiggerThan(ht_distance.get( maxNodeId ), distance_node )) {
-                logger.info("Removed node more far away. Node removed: " + maxNodeId );
-                logger.info("Node add. Node: " + node.getNodeID() );
-                ht_distance.remove( maxNodeId );
-                Node node_Max_distance = getNodeFromBucketByNodeID( maxNodeId );
-                bucket.remove( node_Max_distance );
-                ht_distance.put( node.getNodeID() , distance_node );
-                bucket.add( node );
-            }
+        catch (IOException ioEx){
+            System.out.println("Server start not possible.\n");
+            ioEx.printStackTrace();
         }
-        else {
-            logger.info("Node add. Node: " + node.getNodeID() );
-            ht_distance.put(node.getNodeID(), getDistance(node, this));
-            bucket.add( node );
+        catch (InterruptedException iEx){
+            System.out.println("Server process interrupted\n");
+            iEx.printStackTrace();
         }
     }
 
-    public String maxDistanceNode()
-    {
-        Set<String> keys = ht_distance.keySet();
-        Iterator<String> itr = keys.iterator();
-        BigInteger maxV = new BigInteger("0");
-        BigInteger temp = new BigInteger("0");
-        String nodeMaxID = "";
-        String key;
+    public void server() throws IOException, InterruptedException {
+        Server server = ServerBuilder.forPort(parseInt(this.udp_port))
+                .addService(new PingServiceImpl()).build();
 
-        while(itr.hasNext())
-        {
-            key = itr.next();
-            temp = ht_distance.get( key );
-
-            if( temp.compareTo(maxV) == 1 )
-            {
-                maxV = new BigInteger(temp.toString());
-                nodeMaxID = key;
-            }
-        }
-
-        return nodeMaxID;
+        server.start();
     }
 
-    class Server {
-        private final Logger logger = Logger.getLogger(Server.class.getName());
+    public void ping_node(String ipaddr, String port){
+        int portInt = parseInt(port);
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(ipaddr, portInt).usePlaintext().build();
+        PingServiceGrpc.PingServiceBlockingStub stub = PingServiceGrpc.newBlockingStub(channel);
 
-        private io.grpc.Server server;
 
-        private void start() throws IOException {
-            /* The port on which the server should run */
-            int port = 50051;
-            server = ServerBuilder.forPort(port)
-                    .addService(new PingServiceImpl())
-                    .build()
-                    .start();
-            logger.info("Server started, listening on " + port);
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                // Use stderr here since the logger may have been reset by its JVM shutdown hook.
-                System.err.println("*** shutting down gRPC server since JVM is shutting down");
-                try {
-                    ssd.kademlia.Node.Server.this.stop();
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                }
-                System.err.println("*** server shut down");
-            }));
+        NodeInfo node = NodeInfo.newBuilder()
+                .setIpaddr(this.ipAddr)
+                .setPort(this.udp_port)
+                .build();
+
+        NodeInfo nodeInfo = stub.ping(
+                PingRequest.newBuilder()
+                        .setNodeID(ipaddr)
+                        .setSender(node)
+                        .build());
+        channel.shutdown();
+    }
+
+    // mudar para o que tinhamos
+    final public String getPeerID(String id) {
+        try {
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            String num = Integer.valueOf(random.nextInt()).toString();
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] result =  sha.digest(num.getBytes());
+            //System.out.println("UniqueID: " + hexEncode(result));
+            return hexEncode(result);
+
         }
 
-        private void stop() throws InterruptedException {
-            if (server != null) {
-                server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
-            }
-        }
-
-        private void blockUntilShutdown() throws InterruptedException {
-            if (server != null) {
-                server.awaitTermination();
-            }
-        }
-
-        public void main(String[] args) throws IOException, InterruptedException {
-            final Server server = new Server();
-            server.start();
-            server.blockUntilShutdown();
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    static private String hexEncode(byte[] input){
+        StringBuilder result = new StringBuilder();
+        char[] digits = {'0', '1', '2', '3', '4','5','6','7','8','9','a','b','c','d','e','f'};
+
+        for (byte b : input) {
+            result.append(digits[(b & 0xf0) >> 4]);
+            result.append(digits[b & 0x0f]);
+        }
+
+        return result.toString();
+    }
 }

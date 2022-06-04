@@ -29,13 +29,13 @@ public class PingServiceGrpc {
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<ssd.PingRequest,
-      ssd.PingResponse> METHOD_PING =
+      ssd.NodeInfo> METHOD_PING =
       io.grpc.MethodDescriptor.create(
           io.grpc.MethodDescriptor.MethodType.UNARY,
           generateFullMethodName(
               "PingService", "Ping"),
           io.grpc.protobuf.ProtoUtils.marshaller(ssd.PingRequest.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(ssd.PingResponse.getDefaultInstance()));
+          io.grpc.protobuf.ProtoUtils.marshaller(ssd.NodeInfo.getDefaultInstance()));
 
   /**
    * Creates a new async stub that supports all call types for the service
@@ -67,7 +67,7 @@ public class PingServiceGrpc {
     /**
      */
     public void ping(ssd.PingRequest request,
-        io.grpc.stub.StreamObserver<ssd.PingResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<ssd.NodeInfo> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_PING, responseObserver);
     }
 
@@ -78,7 +78,7 @@ public class PingServiceGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 ssd.PingRequest,
-                ssd.PingResponse>(
+                ssd.NodeInfo>(
                   this, METHODID_PING)))
           .build();
     }
@@ -105,7 +105,7 @@ public class PingServiceGrpc {
     /**
      */
     public void ping(ssd.PingRequest request,
-        io.grpc.stub.StreamObserver<ssd.PingResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<ssd.NodeInfo> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_PING, getCallOptions()), request, responseObserver);
     }
@@ -131,7 +131,7 @@ public class PingServiceGrpc {
 
     /**
      */
-    public ssd.PingResponse ping(ssd.PingRequest request) {
+    public ssd.NodeInfo ping(ssd.PingRequest request) {
       return blockingUnaryCall(
           getChannel(), METHOD_PING, getCallOptions(), request);
     }
@@ -157,7 +157,7 @@ public class PingServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<ssd.PingResponse> ping(
+    public com.google.common.util.concurrent.ListenableFuture<ssd.NodeInfo> ping(
         ssd.PingRequest request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_PING, getCallOptions()), request);
@@ -185,7 +185,7 @@ public class PingServiceGrpc {
       switch (methodId) {
         case METHODID_PING:
           serviceImpl.ping((ssd.PingRequest) request,
-              (io.grpc.stub.StreamObserver<ssd.PingResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<ssd.NodeInfo>) responseObserver);
           break;
         default:
           throw new AssertionError();
