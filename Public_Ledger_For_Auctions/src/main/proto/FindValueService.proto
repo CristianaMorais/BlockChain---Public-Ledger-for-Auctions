@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "ssd";
+option java_outer_classname = "Public_Ledger_For_Auctions";
+
+service FindValueService {
+  rpc FindV (FindValue) returns (NodeReply);
+}
+message FindValue {
+  string node_id = 1;
+}
+
+message NodeReply {
+  bool value_found = 1; //if true then a value was found so a value is returned on the message
+  repeated Node nodes = 2;
+  string value_res = 3;
+}
+
+message Node {
+  string ip_addr = 1;
+  int32 udp_port = 2;
+  string node_id = 3;
+}

@@ -149,7 +149,7 @@ public class Node {
         return nodeMaxID;
     }
 
-    public static class Server {
+    class Server {
         private final Logger logger = Logger.getLogger(Server.class.getName());
 
         private io.grpc.Server server;
@@ -186,7 +186,7 @@ public class Node {
             }
         }
 
-        public static void main(String[] args) throws IOException, InterruptedException {
+        public void main(String[] args) throws IOException, InterruptedException {
             final Server server = new Server();
             server.start();
             server.blockUntilShutdown();

@@ -9,7 +9,8 @@ service PingService {
 }
 
 message PingRequest {
-  string request = 1;
+  bytes  nodeID = 1;
+  int32 sender = 2;
 }
 
 message PingResponse {

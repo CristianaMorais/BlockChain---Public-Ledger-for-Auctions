@@ -6,7 +6,7 @@ import ssd.PingServiceGrpc;
 
 public class PingServiceImpl extends PingServiceGrpc.PingServiceImplBase {
 
-    public void pingService(PingRequest request, StreamObserver<PingResponse> responseObserver){
+    public static void pingService(PingRequest request, StreamObserver<PingResponse> responseObserver){
 
         PingResponse response = PingResponse.newBuilder().setResponse("true").build();
         responseObserver.onNext(response);
