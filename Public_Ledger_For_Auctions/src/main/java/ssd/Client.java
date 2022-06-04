@@ -74,7 +74,8 @@ public class Client {
                     break;
 
                 case 2:
-                    System.out.println("Wallet balance is: " + user.getBalance());
+                    System.out.println();
+                    checkBalances();
                     break;
 
                 case 3:
@@ -88,10 +89,22 @@ public class Client {
         }
     }
 
+    private static void checkBalances() {
+        if(listWallets.size() > 1)
+            System.out.println("Currently you have: " + listWallets.size() + " wallets");
+        else
+            System.out.println("Currently you have: " + listWallets.size() + " Wallet");
+        for(int i=0; i<listWallets.size(); i++) {
+            System.out.println("The " +  (i+1) + "ª Wallet has the following balance: " + listWallets.get(i).getBalance());
+        }
+        System.out.println();
+    }
+
     private static void createNewWallet() {
         Wallet newWallet = new Wallet();
         listWallets.add(newWallet);
-        System.out.println(Arrays.toString(listWallets.toArray()));
+        System.out.println("A new Wallet was created.");
+        System.out.println();
 
     }
 
