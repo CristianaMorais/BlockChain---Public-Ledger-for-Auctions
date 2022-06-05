@@ -7,15 +7,15 @@ but opposite to Bitcoin and Etherium, the purpose here is to have a decentralize
 capable of storing auction transactions.
 The work is divided into 3 parts, distributed ledger, secure P2P and auction mechanisms.
 
-## Instruções de Utilização - com recurso ao Intellij IDEA
+## Instructions for Use - using Intellij IDEA
 
-• Começar por clicar com o botão direito do rato no ficheiro *pom.xml*
+• Start by right-clicking on the *pom.xml* file
 
-• Selecionar *Maven* > *Generate Sources and Update Folders*
+• Select *Maven* > *Generate Sources and Update Folders*
 
-• Em seguida será necessário ir à pasta *src* > *main* > *java* > *ssd* 
+• Next you need to go to the *src* > *main* > *java* > *ssd* folder 
 
-• Dentro da pasta *ssd* clicar com o botão direito do rato no ficheiro *Client.java* > *Run 'Client.main()'*
+• Inside the *ssd* folder right-click on the *Client.java* > *Run 'Client.main()'*
 
 ------------------------------------------------------------------------
 
