@@ -178,21 +178,18 @@ public class Client {
                         else {
                             System.out.println("The value of transaction cannot be zero, please try again.");
                             System.out.println();
-                            break;
                         }
                     }
 
                     else {
                         System.out.println("Invalid option, please try again.");
                         System.out.println();
-                        break;
                     }
                 }
 
                 else {
                     System.out.println("Invalid option, please try again.");
                     System.out.println();
-                    break;
                 }
             }
 
