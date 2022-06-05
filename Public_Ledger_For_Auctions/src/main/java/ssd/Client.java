@@ -32,6 +32,8 @@ public class Client {
     static Block genesis = new Block("0");
     static Block newBlock;
 
+    Transaction transaction;
+
     public static void main(String[] args)  {
         //add our blocks to the blockchain ArrayList:
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
@@ -39,15 +41,14 @@ public class Client {
 
         try {
             machineIP = getMachineIP();
-        }
-        catch (IOException ex){
+        }catch (IOException ex){
             System.out.println("GET request didn't work.\n");
             ex.printStackTrace();
         }
 
+        //verificar se o próprio servidor está ativo
         Node thisNode = new Node(machineIP,"8080");
         thisNode.ping("localhost","8080");
-        thisNode.store("aaaa", "bbbb");
 
         System.out.println("************************************");
         System.out.println("**  Welcome to the Public Ledger  **");
