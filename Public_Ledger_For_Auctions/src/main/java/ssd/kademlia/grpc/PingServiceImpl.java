@@ -10,7 +10,7 @@ public class PingServiceImpl extends PingServiceGrpc.PingServiceImplBase {
     @Override
     public void ping(PingRequest request, StreamObserver<NodeInfo> responseObserver) {
 
-        System.out.println("Initial Ping: ");
+        System.out.println("Try to Ping: ");
         System.out.println(request);
         NodeInfo response = NodeInfo.newBuilder()
                 .setNodeid(request.getSender().getNodeid())
