@@ -8,12 +8,10 @@ import ssd.PingServiceGrpc;
 public class PingServiceImpl extends PingServiceGrpc.PingServiceImplBase {
 
     @Override
-    public void ping(PingRequest request, StreamObserver<NodeInfo> responseObserver){
+    public void ping(PingRequest request, StreamObserver<NodeInfo> responseObserver) {
 
-        //System.out.println(request);
-
-        //System.out.println("Ping " + request.getSender().getNodeid());
-
+        System.out.println("Infos:");
+        System.out.println(request);
         NodeInfo response = NodeInfo.newBuilder()
                 .setNodeid(request.getSender().getNodeid())
                 .setIp(request.getSender().getIp())

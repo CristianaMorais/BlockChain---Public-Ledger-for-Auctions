@@ -35,18 +35,12 @@ public class Client {
     public static void main(String[] args)  {
         //add our blocks to the blockchain ArrayList:
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
-        String machineIP = "localhost";
+        String ip = "localhost";
 
-        try {
-            machineIP = getMachineIP();
-        }catch (IOException ex){
-            System.out.println("GET request didn't work.\n");
-            ex.printStackTrace();
-        }
+        ip = getAddress();
 
-        //verificar se o próprio servidor está ativo
-        Node thisNode = new Node(machineIP,"8080");
-        thisNode.ping("localhost","8080");
+        Node node = new Node(ip,"8080");
+        node.ping("localhost","8080");
 
         System.out.println("************************************");
         System.out.println("**  Welcome to the Public Ledger  **");
@@ -239,13 +233,13 @@ public class Client {
 
     }
 
-    // Parte do Kademlia
+    // Get IP of the machine
     public static String getAddress() {
         try {
             URL url = new URL("https://checkip.amazonaws.com/");
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-            System.out.println(br.readLine());
-            return br.readLine();
+            String IP_add = br.readLine();
+            return IP_add;
 
         }
 
@@ -255,7 +249,6 @@ public class Client {
     }
 
     // BlockChain
-
     public static Boolean isChainValid() {
         Block currentBlock;
         Block previousBlock;
@@ -336,29 +329,5 @@ public class Client {
     public static void addBlock(Block newBlock) {
         newBlock.mineBlock(difficulty);
         blockchain.add(newBlock);
-    }
-
-    public static String getMachineIP() throws IOException {
-        URL ipGetter =new URL("https://myexternalip.com/raw");
-        HttpURLConnection con = (HttpURLConnection) ipGetter.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        int responseCode = con.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            // print result
-            return response.toString();
-        } else {
-            return null;
-        }
     }
 }
