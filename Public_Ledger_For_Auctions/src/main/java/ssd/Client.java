@@ -10,20 +10,22 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static ssd.Menus.callInitialMenu;
-import static ssd.Menus.userMenu;
+import static ssd.Menus.*;
 
 public class Client {
 
     //private static final Logger logger = Logger.getLogger(Client.class.getName());
     static int chIM, chUM;
+    static int opF;
+    static int opT;
     public static ArrayList<Block> blockchain = new ArrayList<>();
     public static HashMap<String,TransactionOutput> UTXOs = new HashMap<>();
     public static Transaction genesisTransaction;
     public static int difficulty = 3;
 
     static List<Wallet> listWallets = new ArrayList<>();
-
+    static Block genesis = new Block("0");
+    static Block newBlock;
 
     public static void main(String[] args)  {
         //add our blocks to the blockchain ArrayList:
@@ -79,7 +81,7 @@ public class Client {
                     break;
 
                 case 3:
-                    doMining(user);
+                    doTransaction(listWallets);
                     break;
 
                 default:
@@ -119,25 +121,39 @@ public class Client {
         genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
         UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //it's important to store our first trans
         System.out.println("Creating and Mining Genesis block... ");
-        Block genesis = new Block("0");
         genesis.addTransaction(genesisTransaction);
         addBlock(genesis);
-
-        Block block1 = new Block(genesis.hash);
-        addBlock(block1);
 
         return user;
     }
 
-    private static void doMining(Wallet user) {
-        System.out.println("Creating and Mining Genesis block... ");
-        Block genesis = new Block("0");
-        genesis.addTransaction(genesisTransaction);
-        addBlock(genesis);
+    private static void doTransaction(List<Wallet> list) {
+        checkBalances();
+        System.out.println("What is the Wallet from where you intend to make the transaction?");
+        opF = in.nextInt();
+        if(opF >= 1 && opF < list.size()) {
+            System.out.println("Which Wallet do you want to send the transaction to?");
+            opT = in.nextInt();
 
-        //testing
-        Block block1 = new Block(genesis.hash);
-        System.out.println("Wallet balance is: " + user.getBalance());
+            if((opT >= 1 && opT < list.size()) && opF != opT) {
+                int last = blockchain.size()-1;
+                newBlock = new Block(blockchain.get(last).hash);
+                //System.out.println("A imprimir: " + blockchain.get(last).hash);
+                newBlock.addTransaction(list.get(opF-1).sendFunds(list.get(opT-1).publicKey, 40f));
+                addBlock(newBlock);
+            }
+
+            else {
+                System.out.println("Invalid option, please try again.");
+                doTransaction(list);
+            }
+
+        }
+
+        else {
+            System.out.println("Invalid option, please try again.");
+            doTransaction(list);
+        }
     }
 
     // Parte do Kademlia
@@ -236,5 +252,4 @@ public class Client {
         newBlock.mineBlock(difficulty);
         blockchain.add(newBlock);
     }
-
 }
