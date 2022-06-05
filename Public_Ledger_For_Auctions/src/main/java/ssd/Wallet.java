@@ -10,9 +10,10 @@ import java.util.HashMap;
 
 public class Wallet {
 
+    public String name;
     public PrivateKey privateKey;
     public PublicKey publicKey;
-    public HashMap<String,TransactionOutput> unspentTrans = new HashMap<String,TransactionOutput>(); //only unspentTrans owned by this wallet.
+    public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>(); //only UTXOs owned by this wallet.
 
 
     public Wallet(){
@@ -39,13 +40,13 @@ public class Wallet {
     }
 
 
-    //returns balance and stores the UTXO's owned by this wallet in this.unspentTrans
+    //returns balance and stores the UTXO's owned by this wallet in this.UTXOs
     public float getBalance() {
         float total = 0;
-        for (Map.Entry<String, TransactionOutput> item: Client.unspentTrans.entrySet()){
+        for (Map.Entry<String, TransactionOutput> item: Client.UTXOs.entrySet()){
             TransactionOutput UTXO = item.getValue();
             if(UTXO.isMine(publicKey)) { //if output belongs to me ( if coins belong to me )
-                unspentTrans.put(UTXO.id,UTXO); //add it to our list of unspent transactions.
+                UTXOs.put(UTXO.id,UTXO); //add it to our list of unspent transactions.
                 total += UTXO.value ;
             }
         }
@@ -61,7 +62,7 @@ public class Wallet {
         ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
 
         float total = 0;
-        for (Map.Entry<String, TransactionOutput> item: unspentTrans.entrySet()){
+        for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
             TransactionOutput UTXO = item.getValue();
             total += UTXO.value;
             inputs.add(new TransactionInput(UTXO.id));
@@ -72,7 +73,7 @@ public class Wallet {
         newTransaction.generateSignature(privateKey);
 
         for(TransactionInput input: inputs){
-            unspentTrans.remove(input.transOutID);
+            UTXOs.remove(input.transactionOutputId);
         }
         return newTransaction;
     }

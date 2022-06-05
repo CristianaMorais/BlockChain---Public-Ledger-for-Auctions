@@ -5,6 +5,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import ssd.NodeInfo;
+import ssd.PingRequest;
 import ssd.PingServiceGrpc;
 import ssd.kademlia.grpc.PingServiceImpl;
 
@@ -15,13 +16,13 @@ import static java.lang.Integer.parseInt;
 public class Node {
 
     public String nodeId;
-    public String ipAdd;
+    public String ipAddr;
     public String udp_port;
 
 
     public Node(String ip, String port){
         this.nodeId = String.valueOf(Math.random()).substring(2);
-        this.ipAdd = ip;
+        this.ipAddr = ip;
         this.udp_port = port;
 
         try{
@@ -47,14 +48,23 @@ public class Node {
     public void ping(String ip, String port){
         int portInt = parseInt(port);
         ManagedChannel channel = ManagedChannelBuilder.forAddress(ip, portInt).usePlaintext().build();
-        PingServiceGrpc.newBlockingStub(channel);
+        PingServiceGrpc.PingServiceBlockingStub stub =
+                PingServiceGrpc.newBlockingStub(channel);
 
 
-        NodeInfo.newBuilder()
-                .setIp(this.ipAdd)
+        NodeInfo node = NodeInfo.newBuilder()
+                .setIp(this.ipAddr)
                 .setPort(this.udp_port)
                 .build();
+
+        NodeInfo nodeInfo = stub.ping(
+                PingRequest.newBuilder()
+                        .setId(ip)
+                        .setSender(node)
+                        .build());
+        channel.shutdown();
     }
+
 
     /*
     final public String getPeerID(String id) {
