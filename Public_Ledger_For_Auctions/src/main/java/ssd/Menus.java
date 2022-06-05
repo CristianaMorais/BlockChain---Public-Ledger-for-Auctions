@@ -15,8 +15,7 @@ public class Menus {
         System.out.println("0 -> Exit");
         System.out.print("Please insert an option: ");
         System.out.println();
-        int choice = in.nextInt();
-        return choice;
+        return in.nextInt();
     }
 
     public static int userMenu() {
@@ -26,8 +25,7 @@ public class Menus {
         System.out.println("4 -> Print BlockChain");
         System.out.println("0 -> Logout");
         System.out.println("Please insert an option: ");
-        int choice = in.nextInt();
-        return choice;
+        return in.nextInt();
     }
 }
 
