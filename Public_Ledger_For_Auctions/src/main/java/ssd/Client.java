@@ -32,8 +32,6 @@ public class Client {
     static Block genesis = new Block("0");
     static Block newBlock;
 
-    Transaction transaction;
-
     public static void main(String[] args)  {
         //add our blocks to the blockchain ArrayList:
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
