@@ -6,7 +6,6 @@ import ssd.kademlia.Node;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.Security;
 import java.util.ArrayList;
@@ -14,28 +13,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.google.common.net.HttpHeaders.USER_AGENT;
 import static ssd.Menus.*;
 
 public class Client {
 
-    //private static final Logger logger = Logger.getLogger(Client.class.getName());
     static int chIM, chUM; //choice do Initial Menu and the choice of the User Menu
     static int opF;
     static int opT;
+    static List<Wallet> listWallets = new ArrayList<>();
     public static ArrayList<Block> blockchain = new ArrayList<>();
-    public static HashMap<String,TransactionOutput> UTXOs = new HashMap<>();
+    public static HashMap<String,TransactionOutput> unspentTrans = new HashMap<>();
     public static Transaction genesisTransaction;
     public static int difficulty = 3;
-
-    static List<Wallet> listWallets = new ArrayList<>();
     static Block genesis = new Block("0");
     static Block newBlock;
 
     public static void main(String[] args)  {
-        //add our blocks to the blockchain ArrayList:
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
-        String ip = "localhost";
+        String ip;
 
         ip = getAddress();
 
@@ -49,15 +44,11 @@ public class Client {
         chIM = callInitialMenu();
 
         while(chIM != 0) {
-            switch (chIM) {
-                case 1:
-                    createUser();
-                    break;
-
-                default:
-                    System.out.println("Invalid option, please try again.");
-                    System.out.println();
-                    break;
+            if (chIM == 1) {
+                createUser();
+            } else {
+                System.out.println("Invalid option, please try again.");
+                System.out.println();
             }
             chIM = callInitialMenu();
         }
@@ -96,6 +87,13 @@ public class Client {
                 case 4:
                     printBlockChain();
                     break;
+                case 5:
+                    sellItem();
+                    break;
+
+                case 6:
+                    buyItem();
+                    break;
 
                 default:
                     System.out.println("Invalid option, please try again.");
@@ -108,15 +106,14 @@ public class Client {
 
     private static Wallet initUser() {
         Wallet user = new Wallet();
-        Wallet coinbase = new Wallet();
-        //create genesis transaction, which sends 100 NoobCoin to walletA:
-        genesisTransaction = new Transaction(coinbase.publicKey, user.publicKey, 100f, null);
+        Wallet base = new Wallet();
+        
+        genesisTransaction = new Transaction(base.publicKey, user.publicKey, 100f, null);
 
-        genesisTransaction.generateSignature(coinbase.privateKey); //manually sign the genesis transaction
-        genesisTransaction.transactionId = "0"; //manually set the transaction id
+        genesisTransaction.generateSignature(base.privateKey); //Sign the genesis transaction
+        genesisTransaction.transactionId = "0"; //Set the transaction ID
         genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
-        UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //it's important to store our first trans
-        //System.out.println("Creating and Mining Genesis block... ");
+        unspentTrans.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //Store our first transaction
         genesis.addTransaction(genesisTransaction);
         addBlock(genesis);
 
@@ -192,15 +189,6 @@ public class Client {
             }
         }
     }
-    /*
-    private static void checkTransactions() {
-        System.out.println("You have the following transactions:");
-        System.out.println("Transactions you made: ");
-        //
-        System.out.println("Transactions you received: ");
-        //
-    }
-    */
 
     private static void printBlockChain() {
 
@@ -233,13 +221,21 @@ public class Client {
 
     }
 
+    private static void sellItem() {
+        //auction = new Auction();
+        System.out.println();
+    }
+
+    private static void buyItem() {
+
+    }
+
     // Get IP of the machine
     public static String getAddress() {
         try {
             URL url = new URL("https://checkip.amazonaws.com/");
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-            String IP_add = br.readLine();
-            return IP_add;
+            return br.readLine();
 
         }
 
@@ -249,85 +245,87 @@ public class Client {
     }
 
     // BlockChain
-    public static Boolean isChainValid() {
-        Block currentBlock;
-        Block previousBlock;
-        String hashTarget = new String(new char[difficulty]).replace('\0', '0');
-        HashMap<String,TransactionOutput> tempUTXOs = new HashMap<>(); //a temporary working list of unspent transactions at a given block state.
-        tempUTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0));
-
-        //loop through blockchain to check hashes:
-        for(int i=1; i < blockchain.size(); i++) {
-
-            currentBlock = blockchain.get(i);
-            previousBlock = blockchain.get(i-1);
-            //compare registered hash and calculated hash:
-            if(!currentBlock.hash.equals(currentBlock.calculateHash()) ){
-                System.out.println("#Current Hashes not equal");
-                return false;
-            }
-            //compare previous hash and registered previous hash
-            if(!previousBlock.hash.equals(currentBlock.previousHash) ) {
-                System.out.println("#Previous Hashes not equal");
-                return false;
-            }
-            //check if hash is solved
-            if(!currentBlock.hash.substring( 0, difficulty).equals(hashTarget)) {
-                System.out.println("#This block hasn't been mined");
-                return false;
-            }
-
-            //loop through blockchains transactions:
-            TransactionOutput tempOutput;
-            for(int t=0; t <currentBlock.transactions.size(); t++) {
-                Transaction currentTransaction = currentBlock.transactions.get(t);
-
-                if(!currentTransaction.verifySignature()) {
-                    System.out.println("#Signature on Transaction(" + t + ") is Invalid");
-                    return false;
-                }
-                if(currentTransaction.getInputsValue() != currentTransaction.getOutputsValue()) {
-                    System.out.println("#Inputs are note equal to outputs on Transaction(" + t + ")");
-                    return false;
-                }
-
-                for(TransactionInput input: currentTransaction.inputs) {
-                    tempOutput = tempUTXOs.get(input.transactionOutputId);
-
-                    if(tempOutput == null) {
-                        System.out.println("#Referenced input on Transaction(" + t + ") is Missing");
-                        return false;
-                    }
-
-                    if(input.UTXO.value != tempOutput.value) {
-                        System.out.println("#Referenced input Transaction(" + t + ") value is Invalid");
-                        return false;
-                    }
-
-                    tempUTXOs.remove(input.transactionOutputId);
-                }
-
-                for(TransactionOutput output: currentTransaction.outputs) {
-                    tempUTXOs.put(output.id, output);
-                }
-
-                if( currentTransaction.outputs.get(0).recipient != currentTransaction.recipient) {
-                    System.out.println("#Transaction(" + t + ") output recipient is not who it should be");
-                    return false;
-                }
-                if( currentTransaction.outputs.get(1).recipient != currentTransaction.sender) {
-                    System.out.println("#Transaction(" + t + ") output 'change' is not sender.");
-                    return false;
-                }
-
-            }
-
-        }
-        return true;
-    }
 
     public static void addBlock(Block newBlock) {
         newBlock.mineBlock(difficulty);
         blockchain.add(newBlock);
     }
+
+    @SuppressWarnings("unused")
+    public static Boolean isChainValid() {
+        Block currentBlock, previousBlock;
+        TransactionOutput tempOutput;
+        Transaction currentTransaction;
+        String hashTarget = new String(new char[difficulty]).replace('\0', '0');
+        HashMap<String,TransactionOutput> tempTrans = new HashMap<>(); 
+        
+        tempTrans.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0));
+
+
+        for(int i=1; i < blockchain.size(); i++) {
+            currentBlock = blockchain.get(i);
+            previousBlock = blockchain.get(i-1);
+
+            if(!currentBlock.hash.equals(currentBlock.calculateHash()) ){
+                System.out.println("The current Hashes are not equal.");
+                return false;
+            }
+            
+            if(!previousBlock.hash.equals(currentBlock.previousHash) ) {
+                System.out.println("The previous Hashes are not equal.");
+                return false;
+            }
+            
+            if(!currentBlock.hash.substring( 0, difficulty).equals(hashTarget)) {
+                System.out.println("This block hasn't been mined yet.");
+                return false;
+            }
+            
+            for(int t=0; t <currentBlock.transactions.size(); t++) {
+                currentTransaction = currentBlock.transactions.get(t);
+
+                if(currentTransaction.verifySignature()) {
+                    System.out.println("The Signature on Transaction (" + t + ") is invalid!");
+                    return false;
+                }
+                
+                if(currentTransaction.getInputsValue() != currentTransaction.getOutputsValue()) {
+                    System.out.println("The inputs are not equal to outputs on Transaction (" + t + ").");
+                    return false;
+                }
+
+                for(TransactionInput input: currentTransaction.inputs) {
+                    tempOutput = tempTrans.get(input.transOutID);
+
+                    if(tempOutput == null) {
+                        System.out.println("The referenced input on Transaction (" + t + ") is missing!");
+                        return false;
+                    }
+
+                    if(input.unspentTrans.value != tempOutput.value) {
+                        System.out.println("The referenced input Transaction (" + t + ") value is invalid!");
+                        return false;
+                    }
+
+                    tempTrans.remove(input.transOutID);
+                }
+
+                for(TransactionOutput output: currentTransaction.outputs) {
+                    tempTrans.put(output.id, output);
+                }
+
+                if( currentTransaction.outputs.get(0).recipient != currentTransaction.recipient) {
+                    System.out.println("The transaction (" + t + ") output recipient is not who it should be.");
+                    return false;
+                }
+                
+                if( currentTransaction.outputs.get(1).recipient != currentTransaction.sender) {
+                    System.out.println("The transaction (" + t + ") output 'change' is not sender.");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
