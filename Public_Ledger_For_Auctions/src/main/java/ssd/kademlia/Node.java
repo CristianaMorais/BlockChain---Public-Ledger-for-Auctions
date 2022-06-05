@@ -10,6 +10,7 @@ import ssd.PingServiceGrpc;
 import ssd.kademlia.grpc.PingServiceImpl;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 import static java.lang.Integer.parseInt;
 
@@ -18,6 +19,8 @@ public class Node {
     public String nodeId;
     public String ipAddr;
     public String udp_port;
+
+
 
 
     public Node(String ip, String port){
@@ -45,7 +48,7 @@ public class Node {
         server.start();
     }
 
-    public void ping(String ip, String port){
+    public void ping(String ip, String port){ // kademlia ping function. The only one implemented
         int portInt = parseInt(port);
         ManagedChannel channel = ManagedChannelBuilder.forAddress(ip, portInt).usePlaintext().build();
         PingServiceGrpc.PingServiceBlockingStub stub =
@@ -65,6 +68,21 @@ public class Node {
         channel.shutdown();
     }
 
+    public BigInteger getDistance(Node n1, Node n2) {
+        return getDistanceById(n1.getNodeid(), n2.getNodeid());
+    }
+
+    private String getNodeid() {
+        return this.nodeId;
+    }
+
+
+    public BigInteger getDistanceById(String n1, String n2) { //Distance of nodes measured using XOR
+        BigInteger vn1 = new BigInteger(n1, 16);
+        BigInteger vn2 = new BigInteger(n2, 16);
+
+        return vn1.xor(vn2);
+    }
 
     /*
     final public String getPeerID(String id) {
