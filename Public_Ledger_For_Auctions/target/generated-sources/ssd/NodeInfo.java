@@ -4,11 +4,11 @@
 package ssd;
 
 /**
- * Protobuf type {@code ssd.NodeInfo}
+ * Protobuf type {@code NodeInfo}
  */
 public  final class NodeInfo extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:ssd.NodeInfo)
+    // @@protoc_insertion_point(message_implements:NodeInfo)
     NodeInfoOrBuilder {
   // Use NodeInfo.newBuilder() to construct.
   private NodeInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -76,12 +76,12 @@ public  final class NodeInfo extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_descriptor;
+    return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_fieldAccessorTable
+    return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             ssd.NodeInfo.class, ssd.NodeInfo.Builder.class);
   }
@@ -346,20 +346,20 @@ public  final class NodeInfo extends
     return builder;
   }
   /**
-   * Protobuf type {@code ssd.NodeInfo}
+   * Protobuf type {@code NodeInfo}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:ssd.NodeInfo)
+      // @@protoc_insertion_point(builder_implements:NodeInfo)
       ssd.NodeInfoOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_descriptor;
+      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_fieldAccessorTable
+      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               ssd.NodeInfo.class, ssd.NodeInfo.Builder.class);
     }
@@ -392,7 +392,7 @@ public  final class NodeInfo extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return ssd.PingServiceOuterClass.internal_static_ssd_NodeInfo_descriptor;
+      return ssd.Public_Ledger_For_Auctions.internal_static_NodeInfo_descriptor;
     }
 
     public ssd.NodeInfo getDefaultInstanceForType() {
@@ -708,10 +708,10 @@ public  final class NodeInfo extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:ssd.NodeInfo)
+    // @@protoc_insertion_point(builder_scope:NodeInfo)
   }
 
-  // @@protoc_insertion_point(class_scope:ssd.NodeInfo)
+  // @@protoc_insertion_point(class_scope:NodeInfo)
   private static final ssd.NodeInfo DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new ssd.NodeInfo();

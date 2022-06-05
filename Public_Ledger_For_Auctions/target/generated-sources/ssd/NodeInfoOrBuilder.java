@@ -4,7 +4,7 @@
 package ssd;
 
 public interface NodeInfoOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:ssd.NodeInfo)
+    // @@protoc_insertion_point(interface_extends:NodeInfo)
     com.google.protobuf.MessageOrBuilder {
 
   /**

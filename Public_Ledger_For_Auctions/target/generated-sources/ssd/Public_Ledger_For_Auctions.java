@@ -3,8 +3,8 @@
 
 package ssd;
 
-public final class PingServiceOuterClass {
-  private PingServiceOuterClass() {}
+public final class Public_Ledger_For_Auctions {
+  private Public_Ledger_For_Auctions() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -15,15 +15,15 @@ public final class PingServiceOuterClass {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ssd_PingRequest_descriptor;
+    internal_static_PingRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ssd_PingRequest_fieldAccessorTable;
+      internal_static_PingRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ssd_NodeInfo_descriptor;
+    internal_static_NodeInfo_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ssd_NodeInfo_fieldAccessorTable;
+      internal_static_NodeInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -33,12 +33,12 @@ public final class PingServiceOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021PingService.proto\022\003ssd\"8\n\013PingRequest\022" +
-      "\n\n\002id\030\001 \001(\t\022\035\n\006sender\030\002 \001(\0132\r.ssd.NodeIn" +
-      "fo\"4\n\010NodeInfo\022\016\n\006nodeid\030\001 \001(\t\022\n\n\002ip\030\002 \001" +
-      "(\t\022\014\n\004port\030\003 \001(\t26\n\013PingService\022\'\n\004Ping\022" +
-      "\020.ssd.PingRequest\032\r.ssd.NodeInfoB\002P\001b\006pr" +
-      "oto3"
+      "\n\021PingService.proto\"4\n\013PingRequest\022\n\n\002id" +
+      "\030\001 \001(\t\022\031\n\006sender\030\002 \001(\0132\t.NodeInfo\"4\n\010Nod" +
+      "eInfo\022\016\n\006nodeid\030\001 \001(\t\022\n\n\002ip\030\002 \001(\t\022\014\n\004por" +
+      "t\030\003 \001(\t2.\n\013PingService\022\037\n\004Ping\022\014.PingReq" +
+      "uest\032\t.NodeInfoB#\n\003ssdB\032Public_Ledger_Fo" +
+      "r_AuctionsP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -52,17 +52,17 @@ public final class PingServiceOuterClass {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_ssd_PingRequest_descriptor =
+    internal_static_PingRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_ssd_PingRequest_fieldAccessorTable = new
+    internal_static_PingRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ssd_PingRequest_descriptor,
+        internal_static_PingRequest_descriptor,
         new java.lang.String[] { "Id", "Sender", });
-    internal_static_ssd_NodeInfo_descriptor =
+    internal_static_NodeInfo_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_ssd_NodeInfo_fieldAccessorTable = new
+    internal_static_NodeInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ssd_NodeInfo_descriptor,
+        internal_static_NodeInfo_descriptor,
         new java.lang.String[] { "Nodeid", "Ip", "Port", });
   }
 

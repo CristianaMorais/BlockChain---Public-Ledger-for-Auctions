@@ -23,7 +23,7 @@ public class Menus {
         System.out.println("1 -> Create more Wallets");
         System.out.println("2 -> Check balance");
         System.out.println("3 -> Do Transaction");
-        System.out.println("4 -> Check Transactions");
+        System.out.println("4 -> Print BlockChain");
         System.out.println("0 -> Logout");
         System.out.println("Please insert an option: ");
         int choice = in.nextInt();

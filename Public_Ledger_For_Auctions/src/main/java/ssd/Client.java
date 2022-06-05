@@ -1,5 +1,6 @@
 package ssd;
 
+import com.google.gson.GsonBuilder;
 import ssd.kademlia.Node;
 
 import java.io.BufferedReader;
@@ -9,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +20,7 @@ import static ssd.Menus.*;
 public class Client {
 
     //private static final Logger logger = Logger.getLogger(Client.class.getName());
-    static int chIM, chUM;
+    static int chIM, chUM; //choice do Initial Menu and the choice of the User Menu
     static int opF;
     static int opT;
     public static ArrayList<Block> blockchain = new ArrayList<>();
@@ -29,6 +31,8 @@ public class Client {
     static List<Wallet> listWallets = new ArrayList<>();
     static Block genesis = new Block("0");
     static Block newBlock;
+
+    Transaction transaction;
 
     public static void main(String[] args)  {
         //add our blocks to the blockchain ArrayList:
@@ -58,11 +62,9 @@ public class Client {
                     createUser();
                     break;
 
-                case 2:
-                    System.out.println("test");
-                    break;
-
                 default:
+                    System.out.println("Invalid option, please try again.");
+                    System.out.println();
                     break;
             }
             chIM = callInitialMenu();
@@ -99,11 +101,34 @@ public class Client {
                     doTransaction(listWallets);
                     break;
 
+                case 4:
+                    printBlockChain();
+                    break;
+
                 default:
+                    System.out.println("Invalid option, please try again.");
+                    System.out.println();
                     break;
             }
             chUM = userMenu();
         }
+    }
+
+    private static Wallet initUser() {
+        Wallet user = new Wallet();
+        Wallet coinbase = new Wallet();
+        //create genesis transaction, which sends 100 NoobCoin to walletA:
+        genesisTransaction = new Transaction(coinbase.publicKey, user.publicKey, 100f, null);
+
+        genesisTransaction.generateSignature(coinbase.privateKey); //manually sign the genesis transaction
+        genesisTransaction.transactionId = "0"; //manually set the transaction id
+        genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
+        UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //it's important to store our first trans
+        //System.out.println("Creating and Mining Genesis block... ");
+        genesis.addTransaction(genesisTransaction);
+        addBlock(genesis);
+
+        return user;
     }
 
     private static void createNewWallet() {
@@ -125,50 +150,94 @@ public class Client {
         System.out.println();
     }
 
-    private static Wallet initUser() {
-        Wallet user = new Wallet();
-        Wallet coinbase = new Wallet();
-        //create genesis transaction, which sends 100 NoobCoin to walletA:
-        genesisTransaction = new Transaction(coinbase.publicKey, user.publicKey, 100f, null);
-
-        genesisTransaction.generateSignature(coinbase.privateKey); //manually sign the genesis transaction
-        genesisTransaction.transactionId = "0"; //manually set the transaction id
-        genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
-        UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //it's important to store our first trans
-        //System.out.println("Creating and Mining Genesis block... ");
-        genesis.addTransaction(genesisTransaction);
-        addBlock(genesis);
-
-        return user;
-    }
-
     private static void doTransaction(List<Wallet> list) {
         checkBalances();
-        System.out.println("What is the Wallet from where you intend to make the transaction?");
-        opF = in.nextInt();
-        if(opF >= 1 && opF <= list.size()) {
-            System.out.println("Which Wallet do you want to send the transaction to?");
-            opT = in.nextInt();
+        if(list.size() > 1) {
+            System.out.println("What is the Wallet from where you intend to make the transaction?");
+            opF = in.nextInt();
+            if(opF >= 1 && opF <= list.size()) {
+                System.out.println("Which Wallet do you want to send the transaction to?");
+                opT = in.nextInt();
 
-            if((opT >= 1 && opT <= list.size()) && opF != opT) {
-                int last = blockchain.size()-1;
-                newBlock = new Block(blockchain.get(last).hash);
-                //System.out.println(blockchain.get(last).hash);
-                newBlock.addTransaction(list.get(opF-1).sendFunds(list.get(opT-1).publicKey, 40f));
-                addBlock(newBlock);
+                if((opT >= 1 && opT <= list.size()) && opF != opT) {
+                    System.out.println("Please insert the value of transaction: ");
+                    float val = in.nextFloat();
+                    int last = blockchain.size()-1;
+                    if(val > 0) {
+                        newBlock = new Block(blockchain.get(last).hash);
+                        //System.out.println(blockchain.get(last).hash);
+                        newBlock.addTransaction(list.get(opF-1).sendFunds(list.get(opT-1).publicKey, val));
+                        addBlock(newBlock);
+                        System.out.println("The " +  opF + "ª Wallet has now the following balance: " + listWallets.get(opF-1).getBalance());
+                        System.out.println("The " +  opT + "ª Wallet has now the following balance: " + listWallets.get(opT-1).getBalance());
+                        System.out.println();
+                    }
+
+                    else {
+                        System.out.println("The value of transaction cannot be zero, please try again.");
+                        System.out.println();
+                        doTransaction(list);
+                    }
+                }
+
+                else {
+                    System.out.println("Invalid option, please try again.");
+                    doTransaction(list);
+                }
             }
 
             else {
                 System.out.println("Invalid option, please try again.");
+                System.out.println();
                 doTransaction(list);
             }
-
         }
 
         else {
-            System.out.println("Invalid option, please try again.");
-            doTransaction(list);
+            System.out.println("More than one wallet is needed to make a transaction, please create more.");
+            System.out.println();
+            userMenu();
         }
+    }
+    /*
+    private static void checkTransactions() {
+        System.out.println("You have the following transactions:");
+        System.out.println("Transactions you made: ");
+        //
+        System.out.println("Transactions you received: ");
+        //
+    }
+    */
+
+    private static void printBlockChain() {
+
+        System.out.println("What format you want to see?");
+        System.out.println("1 -> Simple view of the BlockChain");
+        System.out.println("2 -> Detailed view of the BlockChain");
+        int op = in.nextInt();
+
+        if(op == 1) {
+            System.out.println("********************");
+            System.out.println("** The BlockChain **");
+            System.out.println("********************");
+            System.out.println(Arrays.toString(blockchain.toArray()));
+            System.out.println();
+        }
+
+        else if(op == 2) {
+            System.out.println("********************");
+            System.out.println("** The BlockChain **");
+            System.out.println("********************");
+            String blockchainPrint = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
+            System.out.println(blockchainPrint);
+            System.out.println();
+        }
+
+        else {
+            System.out.println("Invalid option, please try again");
+            printBlockChain();
+        }
+
     }
 
     // Parte do Kademlia
@@ -185,6 +254,8 @@ public class Client {
             throw new RuntimeException(e);
         }
     }
+
+    // BlockChain
 
     public static Boolean isChainValid() {
         Block currentBlock;

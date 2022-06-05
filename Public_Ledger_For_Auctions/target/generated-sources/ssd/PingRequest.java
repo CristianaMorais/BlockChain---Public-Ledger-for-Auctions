@@ -4,11 +4,11 @@
 package ssd;
 
 /**
- * Protobuf type {@code ssd.PingRequest}
+ * Protobuf type {@code PingRequest}
  */
 public  final class PingRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:ssd.PingRequest)
+    // @@protoc_insertion_point(message_implements:PingRequest)
     PingRequestOrBuilder {
   // Use PingRequest.newBuilder() to construct.
   private PingRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -75,12 +75,12 @@ public  final class PingRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_descriptor;
+    return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_fieldAccessorTable
+    return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             ssd.PingRequest.class, ssd.PingRequest.Builder.class);
   }
@@ -122,19 +122,19 @@ public  final class PingRequest extends
   public static final int SENDER_FIELD_NUMBER = 2;
   private ssd.NodeInfo sender_;
   /**
-   * <code>optional .ssd.NodeInfo sender = 2;</code>
+   * <code>optional .NodeInfo sender = 2;</code>
    */
   public boolean hasSender() {
     return sender_ != null;
   }
   /**
-   * <code>optional .ssd.NodeInfo sender = 2;</code>
+   * <code>optional .NodeInfo sender = 2;</code>
    */
   public ssd.NodeInfo getSender() {
     return sender_ == null ? ssd.NodeInfo.getDefaultInstance() : sender_;
   }
   /**
-   * <code>optional .ssd.NodeInfo sender = 2;</code>
+   * <code>optional .NodeInfo sender = 2;</code>
    */
   public ssd.NodeInfoOrBuilder getSenderOrBuilder() {
     return getSender();
@@ -294,20 +294,20 @@ public  final class PingRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code ssd.PingRequest}
+   * Protobuf type {@code PingRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:ssd.PingRequest)
+      // @@protoc_insertion_point(builder_implements:PingRequest)
       ssd.PingRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_descriptor;
+      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_fieldAccessorTable
+      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               ssd.PingRequest.class, ssd.PingRequest.Builder.class);
     }
@@ -342,7 +342,7 @@ public  final class PingRequest extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return ssd.PingServiceOuterClass.internal_static_ssd_PingRequest_descriptor;
+      return ssd.Public_Ledger_For_Auctions.internal_static_PingRequest_descriptor;
     }
 
     public ssd.PingRequest getDefaultInstanceForType() {
@@ -512,13 +512,13 @@ public  final class PingRequest extends
     private com.google.protobuf.SingleFieldBuilderV3<
         ssd.NodeInfo, ssd.NodeInfo.Builder, ssd.NodeInfoOrBuilder> senderBuilder_;
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public boolean hasSender() {
       return senderBuilder_ != null || sender_ != null;
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public ssd.NodeInfo getSender() {
       if (senderBuilder_ == null) {
@@ -528,7 +528,7 @@ public  final class PingRequest extends
       }
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public Builder setSender(ssd.NodeInfo value) {
       if (senderBuilder_ == null) {
@@ -544,7 +544,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public Builder setSender(
         ssd.NodeInfo.Builder builderForValue) {
@@ -558,7 +558,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public Builder mergeSender(ssd.NodeInfo value) {
       if (senderBuilder_ == null) {
@@ -576,7 +576,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public Builder clearSender() {
       if (senderBuilder_ == null) {
@@ -590,7 +590,7 @@ public  final class PingRequest extends
       return this;
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public ssd.NodeInfo.Builder getSenderBuilder() {
       
@@ -598,7 +598,7 @@ public  final class PingRequest extends
       return getSenderFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     public ssd.NodeInfoOrBuilder getSenderOrBuilder() {
       if (senderBuilder_ != null) {
@@ -609,7 +609,7 @@ public  final class PingRequest extends
       }
     }
     /**
-     * <code>optional .ssd.NodeInfo sender = 2;</code>
+     * <code>optional .NodeInfo sender = 2;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         ssd.NodeInfo, ssd.NodeInfo.Builder, ssd.NodeInfoOrBuilder> 
@@ -635,10 +635,10 @@ public  final class PingRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:ssd.PingRequest)
+    // @@protoc_insertion_point(builder_scope:PingRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:ssd.PingRequest)
+  // @@protoc_insertion_point(class_scope:PingRequest)
   private static final ssd.PingRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new ssd.PingRequest();

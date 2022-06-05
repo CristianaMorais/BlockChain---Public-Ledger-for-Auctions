@@ -4,7 +4,7 @@
 package ssd;
 
 public interface PingRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:ssd.PingRequest)
+    // @@protoc_insertion_point(interface_extends:PingRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -18,15 +18,15 @@ public interface PingRequestOrBuilder extends
       getIdBytes();
 
   /**
-   * <code>optional .ssd.NodeInfo sender = 2;</code>
+   * <code>optional .NodeInfo sender = 2;</code>
    */
   boolean hasSender();
   /**
-   * <code>optional .ssd.NodeInfo sender = 2;</code>
+   * <code>optional .NodeInfo sender = 2;</code>
    */
   ssd.NodeInfo getSender();
   /**
-   * <code>optional .ssd.NodeInfo sender = 2;</code>
+   * <code>optional .NodeInfo sender = 2;</code>
    */
   ssd.NodeInfoOrBuilder getSenderOrBuilder();
 }
