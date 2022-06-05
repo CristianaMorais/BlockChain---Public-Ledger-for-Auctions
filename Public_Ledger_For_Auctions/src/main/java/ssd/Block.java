@@ -8,11 +8,11 @@ public class Block {
     public String hash;
     public String previousHash;
     public String merkleRoot;
-    public ArrayList<Transaction> transactions = new ArrayList<Transaction>(); //our data will be a simple message.
-    public long timeStamp; //as number of milliseconds since 1/1/1970.
-    public int nonce;
+    public ArrayList<Transaction> transactions = new ArrayList<>(); //save transactions on an ArrayList
+    public long timeStamp; //in milliseconds
+    public int nonce; // when rehashed, meets the difficulty level restrictions
 
-    //Block Constructor.
+    //Block Constructor
     public Block(String previousHash ) {
         this.previousHash = previousHash;
         this.timeStamp = new Date().getTime();
@@ -20,18 +20,19 @@ public class Block {
         this.hash = calculateHash(); //Making sure we do this after we set the other values.
     }
 
-    //Calculate new hash based on blocks contents
+    //Calculate new hash with : hash of previous block + timestamp in millic + nonce + merkleroot with translations
     public String calculateHash() {
         String calculatedhash = StringUtil.applySha256(
                 previousHash +
-                        Long.toString(timeStamp) +
-                        Integer.toString(nonce) +
+                        timeStamp +
+                        nonce +
                         merkleRoot
         );
         return calculatedhash;
     }
 
-    //Increases nonce value until hash target is reached.
+
+    //MineBlock of blockchain. Nonce increases each time -> target
     public void mineBlock(int difficulty) {
         merkleRoot = StringUtil.getMerkleRoot(transactions);
         String target = StringUtil.getDificultyString(difficulty); //Create a string with difficulty * "0"
@@ -39,21 +40,23 @@ public class Block {
             nonce ++;
             hash = calculateHash();
         }
-        System.out.println("Block Mined!!! : " + hash);
+        System.out.println("Block mined -> hash : " + hash);
     }
 
-    //Add transactions to this block
+    //Boolean function
+    //true if is added with sucess
+    //false if not.
     public boolean addTransaction(Transaction transaction) {
-        //process transaction and check if valid, unless block is genesis block then ignore.
+        //ignores genesis block (first block of blockchain
         if(transaction == null) return false;
-        if((previousHash != "0")) {
-            if((transaction.processTransaction() != true)) {
-                System.out.println("Transaction failed to process. Discarded.");
+        if((previousHash != "0")) { // != hash of genesis
+            if((!transaction.processTransaction())) {
+                System.out.println("Transaction failed. It was discarded.");
                 return false;
             }
         }
         transactions.add(transaction);
-        System.out.println("Transaction Successfully added to Block");
+        System.out.println("Transaction successful.  It was added to the block");
         return true;
     }
 

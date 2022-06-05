@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StringUtil {
 
-    //Applies Sha256 to a string and returns the result.
+    //Applies Sha256 to a string and returns the result
     public static String applySha256(String input){
 
         try {
@@ -17,7 +17,7 @@ public class StringUtil {
             //Applies sha256 to our input,
             byte[] hash = digest.digest(input.getBytes("UTF-8"));
 
-            StringBuffer hexString = new StringBuffer(); // This will contain hash as hexidecimal
+            StringBuffer hexString = new StringBuffer(); // to hexadecimal
             for (int i = 0; i < hash.length; i++) {
                 String hex = Integer.toHexString(0xff & hash[i]);
                 if(hex.length() == 1) hexString.append('0');
@@ -30,7 +30,7 @@ public class StringUtil {
         }
     }
 
-    //Applies ECDSA Signature and returns the result ( as bytes ).
+    //Applies ECDSA Signature and returns the result ( as bytes )
     public static byte[] applyECDSASig(PrivateKey privateKey, String input) {
         Signature dsa;
         byte[] output = new byte[0];
@@ -59,23 +59,27 @@ public class StringUtil {
         }
     }
 
-    //Short hand helper to turn Object into a json string
+    //Used do detail print BlockChain - REVER
     public static String getJson(Object o) {
         return new GsonBuilder().setPrettyPrinting().create().toJson(o);
     }
 
-    //Returns difficulty string target, to compare to hash. eg difficulty of 5 will return "00000"
+    // To Proof of Work. Each number equals to the number of zeros
     public static String getDificultyString(int difficulty) {
         return new String(new char[difficulty]).replace('\0', '0');
     }
-
+    //
     public static String getStringFromKey(Key key) {
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
+
+    // Implements merkle root
+    //Speeds hash calculation
+    //Stores Transactions
     public static String getMerkleRoot(ArrayList<Transaction> transactions) {
         int count = transactions.size();
-
+        //System.out.printn("Entrou.")
         List<String> previousTreeLayer = new ArrayList<String>();
         for(Transaction transaction : transactions) {
             previousTreeLayer.add(transaction.transactionId);
