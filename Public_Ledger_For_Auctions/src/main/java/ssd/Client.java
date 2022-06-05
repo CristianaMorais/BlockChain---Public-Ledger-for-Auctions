@@ -152,51 +152,55 @@ public class Client {
 
     private static void doTransaction(List<Wallet> list) {
         checkBalances();
-        if(list.size() > 1) {
-            System.out.println("What is the Wallet from where you intend to make the transaction?");
-            opF = in.nextInt();
-            if(opF >= 1 && opF <= list.size()) {
-                System.out.println("Which Wallet do you want to send the transaction to?");
-                opT = in.nextInt();
+        while(true) {
+            if(list.size() > 1) {
+                System.out.println("What is the Wallet from where you intend to make the transaction?");
+                opF = in.nextInt();
+                if(opF >= 1 && opF <= list.size()) {
+                    System.out.println("Which Wallet do you want to send the transaction to?");
+                    opT = in.nextInt();
 
-                if((opT >= 1 && opT <= list.size()) && opF != opT) {
-                    System.out.println("Please insert the value of transaction: ");
-                    float val = in.nextFloat();
-                    int last = blockchain.size()-1;
-                    if(val > 0) {
-                        newBlock = new Block(blockchain.get(last).hash);
-                        //System.out.println(blockchain.get(last).hash);
-                        newBlock.addTransaction(list.get(opF-1).sendFunds(list.get(opT-1).publicKey, val));
-                        addBlock(newBlock);
-                        System.out.println("The " +  opF + "ª Wallet has now the following balance: " + listWallets.get(opF-1).getBalance());
-                        System.out.println("The " +  opT + "ª Wallet has now the following balance: " + listWallets.get(opT-1).getBalance());
-                        System.out.println();
+                    if((opT >= 1 && opT <= list.size()) && opF != opT) {
+                        System.out.println("Please insert the value of transaction: ");
+                        float val = in.nextFloat();
+                        int last = blockchain.size()-1;
+                        if(val > 0) {
+                            newBlock = new Block(blockchain.get(last).hash);
+                            //System.out.println(blockchain.get(last).hash);
+                            newBlock.addTransaction(list.get(opF-1).sendFunds(list.get(opT-1).publicKey, val));
+                            addBlock(newBlock);
+                            System.out.println("The " +  opF + "ª Wallet has now the following balance: " + listWallets.get(opF-1).getBalance());
+                            System.out.println("The " +  opT + "ª Wallet has now the following balance: " + listWallets.get(opT-1).getBalance());
+                            System.out.println();
+                            break;
+                        }
+
+                        else {
+                            System.out.println("The value of transaction cannot be zero, please try again.");
+                            System.out.println();
+                            break;
+                        }
                     }
 
                     else {
-                        System.out.println("The value of transaction cannot be zero, please try again.");
+                        System.out.println("Invalid option, please try again.");
                         System.out.println();
-                        doTransaction(list);
+                        break;
                     }
                 }
 
                 else {
                     System.out.println("Invalid option, please try again.");
-                    doTransaction(list);
+                    System.out.println();
+                    break;
                 }
             }
 
             else {
-                System.out.println("Invalid option, please try again.");
+                System.out.println("More than one wallet is needed to make a transaction, please create more.");
                 System.out.println();
-                doTransaction(list);
+                break;
             }
-        }
-
-        else {
-            System.out.println("More than one wallet is needed to make a transaction, please create more.");
-            System.out.println();
-            userMenu();
         }
     }
     /*
