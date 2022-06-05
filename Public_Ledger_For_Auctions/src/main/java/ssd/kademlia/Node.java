@@ -10,11 +10,6 @@ import ssd.PingServiceGrpc;
 import ssd.kademlia.grpc.PingServiceImpl;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import static java.lang.Integer.parseInt;
 
@@ -71,7 +66,7 @@ public class Node {
     }
 
 
-    // mudar para o que tinhamos
+    /*
     final public String getPeerID(String id) {
         try {
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
@@ -87,7 +82,8 @@ public class Node {
             throw new RuntimeException(e);
         }
     }
-
+    */
+    /*
     static private String hexEncode(byte[] input){
         StringBuilder result = new StringBuilder();
         char[] digits = {'0', '1', '2', '3', '4','5','6','7','8','9','a','b','c','d','e','f'};
@@ -99,4 +95,5 @@ public class Node {
 
         return result.toString();
     }
+    */
 }
