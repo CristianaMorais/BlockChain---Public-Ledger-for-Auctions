@@ -1,15 +1,18 @@
 package ssd;
 
+import ssd.kademlia.Node;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.Security;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.google.common.net.HttpHeaders.USER_AGENT;
 import static ssd.Menus.*;
 
 public class Client {
@@ -30,6 +33,18 @@ public class Client {
     public static void main(String[] args)  {
         //add our blocks to the blockchain ArrayList:
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
+        String machineIP = "localhost";
+
+        try {
+            machineIP = getMachineIP();
+        }catch (IOException ex){
+            System.out.println("GET request didn't work.\n");
+            ex.printStackTrace();
+        }
+
+        //verificar se o próprio servidor está ativo
+        Node thisNode = new Node(machineIP,"8080");
+        thisNode.ping("localhost","8080");
 
         System.out.println("************************************");
         System.out.println("**  Welcome to the Public Ledger  **");
@@ -56,6 +71,9 @@ public class Client {
     }
 
     private static void createUser() {
+        System.out.println("************************************");
+        System.out.println("************ Your Menu! ************");
+        System.out.println("************************************");
 
         //User initialization
         Wallet user;
@@ -65,9 +83,6 @@ public class Client {
         // Calling the menu for the created user
         chUM = userMenu();
 
-        System.out.println("************************************");
-        System.out.println("************ Your Menu! ************");
-        System.out.println("************************************");
 
         while(chUM != 0) {
             switch (chUM) {
@@ -91,6 +106,14 @@ public class Client {
         }
     }
 
+    private static void createNewWallet() {
+        Wallet newWallet = new Wallet();
+        listWallets.add(newWallet);
+        System.out.println("A new Wallet was created.");
+        System.out.println();
+
+    }
+
     private static void checkBalances() {
         if(listWallets.size() > 1)
             System.out.println("Currently you have: " + listWallets.size() + " wallets");
@@ -100,14 +123,6 @@ public class Client {
             System.out.println("The " +  (i+1) + "ª Wallet has the following balance: " + listWallets.get(i).getBalance());
         }
         System.out.println();
-    }
-
-    private static void createNewWallet() {
-        Wallet newWallet = new Wallet();
-        listWallets.add(newWallet);
-        System.out.println("A new Wallet was created.");
-        System.out.println();
-
     }
 
     private static Wallet initUser() {
@@ -120,7 +135,7 @@ public class Client {
         genesisTransaction.transactionId = "0"; //manually set the transaction id
         genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
         UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //it's important to store our first trans
-        System.out.println("Creating and Mining Genesis block... ");
+        //System.out.println("Creating and Mining Genesis block... ");
         genesis.addTransaction(genesisTransaction);
         addBlock(genesis);
 
@@ -131,14 +146,14 @@ public class Client {
         checkBalances();
         System.out.println("What is the Wallet from where you intend to make the transaction?");
         opF = in.nextInt();
-        if(opF >= 1 && opF < list.size()) {
+        if(opF >= 1 && opF <= list.size()) {
             System.out.println("Which Wallet do you want to send the transaction to?");
             opT = in.nextInt();
 
-            if((opT >= 1 && opT < list.size()) && opF != opT) {
+            if((opT >= 1 && opT <= list.size()) && opF != opT) {
                 int last = blockchain.size()-1;
                 newBlock = new Block(blockchain.get(last).hash);
-                //System.out.println("A imprimir: " + blockchain.get(last).hash);
+                //System.out.println(blockchain.get(last).hash);
                 newBlock.addTransaction(list.get(opF-1).sendFunds(list.get(opT-1).publicKey, 40f));
                 addBlock(newBlock);
             }
@@ -251,5 +266,29 @@ public class Client {
     public static void addBlock(Block newBlock) {
         newBlock.mineBlock(difficulty);
         blockchain.add(newBlock);
+    }
+
+    public static String getMachineIP() throws IOException {
+        URL ipGetter =new URL("https://myexternalip.com/raw");
+        HttpURLConnection con = (HttpURLConnection) ipGetter.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        int responseCode = con.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) { // success
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // print result
+            return response.toString();
+        } else {
+            return null;
+        }
     }
 }

@@ -12,7 +12,6 @@ public class Menus {
         System.out.println("What you want to do?");
         System.out.println();
         System.out.println("1 -> Create user");
-        System.out.println("2 -> Verify users with existing wallets"); //
         System.out.println("0 -> Exit");
         System.out.print("Please insert an option: ");
         System.out.println();
