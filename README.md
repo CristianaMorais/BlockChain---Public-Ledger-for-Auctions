@@ -19,9 +19,9 @@ The work is divided into 3 parts, distributed ledger, secure P2P and auction mec
 
 ------------------------------------------------------------------------
 
-### &nbsp; :busts_in_silhouette: Autores&nbsp;/Authors&nbsp; :busts_in_silhouette:
+### &nbsp; :busts_in_silhouette: Authors&nbsp; :busts_in_silhouette:
 
-| Nome/Name                                             | Número Mecanográfico |
+| Name                                                  | Student Number       |
 |-------------------------------------------------------|----------------------|
 | [Cristiana Silva](https://github.com/CristianaMorais) | up201505454          |
 | [Nuno Tomás](https://github.com/nmot97)               | up201503467          |        
